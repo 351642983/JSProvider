@@ -1,0 +1,471 @@
+/*groupid:19----------css name:OA样式-tab样式--------*/
+.oa-inittab{
+	width:114px;
+	height:38px;
+	background:#333333;
+	border-radius:0px 0px  8px 8px;
+	color:white;
+	margin-left:1px !important;
+}
+.oa-inittab.tabactive{
+	width:114px;
+	height:38px;
+	background:white;
+	border-radius:0px 0px  8px 8px;
+	color:#333333;
+}
+/*groupid:15----------css name:奔跑科技PC移动端样式库--------*/
+.line{
+height:1px;
+width:100%;
+border-top:1px solid #F1F1F1;
+}
+
+.gray{
+color: #F1F1F1;
+}
+
+.bg-gray{
+background: #F1F1F1;
+}
+
+/*groupid:15----------css name:奔跑科技移动端样式库--------*/
+ /*移动端样式*/
+@media screen and (max-width:768px){
+.mhidden{
+display:none !important;
+}
+}
+/*groupid:15----------css name: 奔跑科技PC端样式库--------*/
+  /*PC端样式*/
+@media screen and (min-width:768px){
+.phidden{
+display:none !important;
+}
+}
+/*groupid:19----------css name:OA基础样式库--------*/
+ :root{
+/*配置页面的时候的线条上下距离*/
+--line-distance:10px;
+/*OA页面的左右边距*/
+--h-distance:30px;
+/*布局中组件间距大小*/
+--inlayout-distance:5px;
+/*布局中组件上下间隙*/
+--inlayout-updistance:11px;
+/*表单输入类组件最大宽度*/
+--inform-maxwidth:92vw;
+/*表单输入类组件宽度*/
+--inform-width:571px;
+/*表单输入类组件最小宽度*/
+--inform-minwidth:200px;
+/*表单输入框左侧内距离*/
+--inform-leftpad:17.55px;
+/*表单输入框右侧内距离*/
+--inform-rightpad:17.55px;
+}
+/*数值输入框*/
+input[type=number]{
+		box-shadow: 0px 0px 0px 0px rgba(0,0,0,0);
+}
+/*文本域输入框*/
+.oa-textarea{
+	margin:var(--inlayout-updistance) 0.7815vw;
+	font-size: 14px;
+    	border-radius: 5px;
+    	padding: var(--inform-leftpad);
+      	width: calc(var(--inform-width) * 2 + 0.7815vw*2);
+    	max-width: var(--inform-maxwidth);
+   	 min-width: var(--inform-minwidth);
+	resize:none;
+	 border:0px;
+	box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.15); 
+	height:150px;
+}
+
+
+/*隐藏地图控件百度水印*/
+.anchorBL{display:none}
+/*表单中单选框样式*/
+input[type="radio"] + label::before {
+    content: " ";
+    display: inline-block;
+    vertical-align: middle;
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    border: 1px solid #979797;
+    margin-right: 6px;
+    box-sizing: border-box;
+    margin-top:-3px;
+}
+input[type="radio"]:checked + label::before {
+    background-color: #2d94e5;
+    background-clip: content-box;
+    box-sizing: border-box;
+	border:1px solid #2d94e5;
+}
+input[type="radio"] {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+}
+input[type="radio"] + label{
+    font-family: PingFangSC, PingFangSC-Regular;
+    font-weight: normal;
+    text-align: left;
+    color: #000000;
+    line-height: 20px;
+	margin-left:8.5px;
+	margin-right:8.5px;
+}
+/*下拉多选框组件样式*/
+.oa-treeselect{
+    margin:var(--inlayout-updistance) 0.7815vw;
+    -webkit-appearance: none;
+    width:var(--inform-width);
+    max-width: var(--inform-maxwidth);
+    min-width:var(--inform-minwidth);
+    border:0px;
+    
+}
+/*下拉多选框输入框样式*/
+.el-input__inner{
+	border-radius: 12px !important;
+	box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.15);
+}
+/*下拉多选框输入框右侧箭头样式*/
+.el-input__icon{
+	margin-right:0.7vw;
+}
+.el-cascader__search-input{
+	margin: 2px 0.7vw 2px 15px
+}
+
+/*表单输入框组件样式*/
+.oa-formstyle{
+    margin:var(--inlayout-updistance) 0.7815vw;
+    -webkit-appearance: none;
+    background: #f1f1f1;
+    height:40px;
+    font-size: 14px;
+    border-radius: 5px;
+    padding-left:var(--inform-leftpad);
+    padding-right:var(--inform-rightpad);
+    width:var(--inform-width);
+    max-width: var(--inform-maxwidth);
+    min-width:var(--inform-minwidth);
+    border:0px;
+			
+        background: #ffffff;
+	border-radius: 12px;
+	box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.15); 	
+}
+
+/*选择框样式*/
+.oa-inputselect{
+	margin:var(--inlayout-updistance) 0.7815vw;
+	-webkit-appearance: none;
+	background: #f1f1f1;
+	height:40px;	
+	font-size: 14px;
+	border-radius: 5px;
+	padding-left:var(--inform-leftpad);
+	padding-right:var(--inform-rightpad);
+	width:var(--inform-width) !important;
+	max-width: var(--inform-maxwidth);
+	min-width:var(--inform-minwidth);
+	border:0px;
+			
+        background: #ffffff;
+	border-radius: 12px;
+	box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.15); 	
+}
+
+/*OA图标库颜色*/
+.glyphicon{
+	color:#999999;
+}
+/*OA图片组件样式*/
+._oa-img{
+}
+/*OA基础Div*/
+._oa-div{
+	/*margin-top:var(--inlayout-updistance);
+	margin-bottom:var(--inlayout-updistance);*/
+}
+/*OA日期输入框样式*/
+.oa-dateinput{
+			margin:var(--inlayout-updistance) 0.7815vw;
+			background: #f1f1f1;
+			line-height: 38px;
+			font-size: 14px;
+			border-radius: 5px;
+			padding-left:var(--inform-leftpad);
+			padding-right:var(--inform-rightpad);
+			width:var(--inform-width);
+			max-width: var(--inform-maxwidth);
+			min-width:var(--inform-minwidth);
+			border:0px;
+			
+        background: #ffffff;
+	border-radius: 12px;
+	box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.15); 	
+}
+/*OA按钮样式*/
+._oabtn{
+	height: 40px; 
+	width: auto;
+	 background: rgb(20, 136, 224);
+	border-radius: 5px; 
+	border-width: 0px; 
+	font-size: 14px;
+	 font-weight: 800; 
+	text-align: center; 
+	color: rgb(255, 255, 255); 
+	line-height: 20px;
+	margin-top:var(--inlayout-updistance);
+	margin-bottom:var(--inlayout-updistance);
+	padding-left:5px;
+	padding-right:5px;
+}
+
+/*OA栏目对应标签输入框高*/
+.oa-lm-input{
+	height:20px;
+	width:170px;
+}
+/*OA输入框里面的样式*/
+.oa-input::placeholder{
+        font-size: 14px;
+	font-family: PingFangSC, PingFangSC-Regular;
+	font-weight: 400;
+	text-align: left;
+	color: #999999;
+	line-height: normal;
+}
+/*OA输入框的样式*/
+.oa-input{
+	margin:var(--inlayout-updistance) 0.7815vw;
+	background: #f1f1f1;
+	line-height: 38px;
+	font-size: 14px;
+	border-radius: 5px;
+	padding-left:var(--inform-leftpad);
+	padding-right:var(--inform-rightpad);
+	width:var(--inform-width);
+	max-width: var(--inform-maxwidth);
+	min-width:var(--inform-minwidth);
+	border:0px;
+
+			
+        background: #ffffff;
+	border-radius: 12px;
+	box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.15); 	
+}
+/*OA输入框的东西*/
+.oa-star.oa-input::placeholder:after{
+        content:“*”,
+	color:"red",
+	margin-left:6px;
+}
+/*添加的oa布局的基本样式*/
+.oa-layout{
+	/*height:70px;*/
+	width:100%;
+}
+/*选中OA元素时的样式*/
+.oa-select{
+	border:1px solid blue !important;
+}
+/*OA元素的默认样式*/
+.oa-element{
+	border:1px solid  #AAAAAA;
+}
+/*鼠标移入OA元素时的样式*/
+.oa-element:hover{
+	border:1px solid  orange;
+}
+/*OA属性栏目的标题样式*/
+.oa-title{
+	color:gray;
+	font-size:14px;
+	font-weight:bold;
+	
+}
+/*OA弹簧外边框颜色*/
+.oa-element._pow{
+	border:5px solid red;
+}
+.oa-element._pow.oa-select{
+	border:5px solid blue !important;
+}
+/*OA系统中输入框左侧label的默认样式*/
+.oa-label{
+	color:gray;
+	font-size:14px;
+	font-weight:bold;
+	width:80px;
+	text-align:right;
+}
+/*groupid:19----------css name:OA样式-上传图片组件子图垃圾桶--------*/
+ .oa-bgljt{
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.oa-bgljt:hover , .oa-bgljt:after{
+    background: rgba(0,0,0,0.4);
+    top:1px;
+    left:1px;
+}
+.oa-ljtsvg{
+    background: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMzFweCIgaGVpZ2h0PSIzMXB4IiB2aWV3Qm94PSIwIDAgMzEgMzEiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8dGl0bGU+5Yig6ZmkX+Whq+WFhTwvdGl0bGU+CiAgICA8ZyBpZD0i566h55CG57O757ufIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8ZyBpZD0i5pWw5o2u566h55CGLS0t6K6+5aSH566h55CGLS0t5paw5aKe77yI5rWB56iLMe+8mui9pui+huS/oeaBr++8iS0j5paw5aKe6aG16Z2i5qih5p2/IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtNDAwLjAwMDAwMCwgLTYxNS4wMDAwMDApIiBmaWxsPSIjRkZGRkZGIiBmaWxsLXJ1bGU9Im5vbnplcm8iPgogICAgICAgICAgICA8ZyBpZD0i5YaF5a655Yy6IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzMjAuMDAwMDAwLCAxOTAuMDAwMDAwKSI+CiAgICAgICAgICAgICAgICA8ZyBpZD0i57yW57uELTciIHRyYW5zZm9ybT0idHJhbnNsYXRlKDM5LjQ5MjQxNywgMTAyLjAwMDAwMCkiPgogICAgICAgICAgICAgICAgICAgIDxnIGlkPSLnvJbnu4QtNSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMC41MDc1ODMsIDI1Ni4wMDAwMDApIj4KICAgICAgICAgICAgICAgICAgICAgICAgPGcgaWQ9Iue8lue7hC0zIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLjAwMDAwMCwgMzUuMDAwMDAwKSI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZyBpZD0i5Yig6ZmkX+Whq+WFhSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDAuMDAwMDAwLCAzMi4wMDAwMDApIj4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8cmVjdCBpZD0i55+p5b2iIiBvcGFjaXR5PSIwIiB4PSIwIiB5PSIwIiB3aWR0aD0iMzEiIGhlaWdodD0iMzEiPjwvcmVjdD4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8cGF0aCBkPSJNMjcuMTE4NzIyNywzLjYyMzIzNzU5IEwyMC40MTM3NDIsMy42MjMyMzc1OSBDMjAuNDEzNzQyLDMuNjIzMjM3NTkgMTkuNDAxMjAzMSwzLjY1Mzk1MDA2IDE4LjYwNTcyNDcsMi44MTI2OTk0MSBDMTguMjg1MjQ3OSwyLjQ1MDE4NzUgMTcuNzQ4NTYyOCwyLjA5Njg1NTQ2IDE2Ljg2NjMzNTksMi4wNjY2NjY2NyBMMTUuNTk2NzQsMi4wNjY2NjY2NyBMMTUuNDAzMTM0MywyLjA2NjY2NjY3IEwxNC4xMzM1Njk5LDIuMDY2NjY2NjcgQzEzLjI1MTMxMTUsMi4wOTY4ODYyNiAxMi43MTQ1MDAyLDIuNDUwMjE4MzEgMTIuMzk0MTgxMSwyLjgxMjY5OTQxIEMxMS41OTg1NzY1LDMuNjUzOTUwMDYgMTAuNTg2MTMyMywzLjYyMzIzNzU5IDEwLjU4NjEzMjMsMy42MjMyMzc1OSBMMy44ODExNTE1NiwzLjYyMzIzNzU5IEMzLjQ0OTc3NjgzLDMuNjIzMjM3NTkgMy4xMDAwMDI1LDMuOTY0NTU1NzMgMy4xMDAwMDI1LDQuMzg1NTA0NSBMMy4xMDAwMDI1LDcuMTg1OTQ1OTQgQzMuMDk4MzYzNDcsNy45OTU5OTEyNCAzLjkwNDEwMTM5LDcuOTgwMDM0MzEgMy45MDQxMDEzOSw3Ljk4MDAzNDMxIEw1LjQ0MDUwODg3LDcuOTgwMDM0MzEgTDUuNDQwNTA4ODcsMjcuNTI4NTM4MSBDNS40NDA1MDg4NywyNy41Mjg1MzgxIDUuMzE4MjE1LDI4Ljg1NDcxOTMgNi42NzczNjg5NywyOC45MjYxNTU4IEwxNC45Nzk4NzI1LDI4LjkyNjE1NTggTDE2LjAxOTk3MDIsMjguOTI2MTU1OCBMMTYuOTY5NzIwNywyOC45MzMzMzMzIEwxOC4xNTY2MDg5LDI4LjkzMzMzMzMgTDIzLjU0OTQ3MTcsMjguOTMzMzMzMyBMMjQuMjk4NTEzNywyOC45MzMzMzMzIEwyNC4zMjI2MzE2LDI4LjkyNjE1NTggQzI1LjY4MTUzMywyOC44NTQ3MTkzIDI1LjU1OTM2NTQsMjcuNTI4NTM4MSAyNS41NTkzNjU0LDI3LjUyODUzODEgTDI1LjU1OTM2NTQsNy45ODAwMzQzMSBMMjcuMDk1ODk5Miw3Ljk4MDAzNDMxIEMyNy4wOTU4OTkyLDcuOTgwMDM0MzEgMjcuOTAxNTQyNCw3Ljk5NTk5MTI0IDI3Ljg5OTk5NzgsNy4xODU5NDU5NCBMMjcuODk5OTk3OCw0LjM4NTUwNDUgQzI3Ljg5OTk5NzgsMy45NjQ1ODY1MyAyNy41NTAxOTIyLDMuNjIzMjM3NTkgMjcuMTE4NzIyNywzLjYyMzIzNzU5IFogTTEyLjc4NjAzMjksMjQuMjA0OTA2NSBDMTIuNzg2MDMyOSwyNC43MTc1OTIyIDEyLjM1OTc0MDYsMjUuMTMzNDI3NCAxMS44MzQ1MTQ2LDI1LjEzMzQyNzQgQzExLjMwOTEzMDgsMjUuMTMzNDI3NCAxMC44ODI5OTY0LDI0LjcxNzU2MTQgMTAuODgyOTk2NCwyNC4yMDQ5MDY1IEwxMC44ODI5OTY0LDkuNjkxODYxODUgQzEwLjg4Mjk5NjQsOS4xNzkxNzYxMyAxMS4zMDkxNjI0LDguNzYzMzQwOTYgMTEuODM0NTE0Niw4Ljc2MzM0MDk2IEMxMi4zNTk3NzIyLDguNzYzMzQwOTYgMTIuNzg2MDMyOSw5LjE3OTIwNjkzIDEyLjc4NjAzMjksOS42OTE4NjE4NSBMMTIuNzg2MDMyOSwyNC4yMDQ5MDY1IFogTTE5Ljk2NTc2MjYsMjQuMjA0OTA2NSBDMTkuOTY1NzYyNiwyNC43MTc1OTIyIDE5LjUzOTU5NjYsMjUuMTMzNDI3NCAxOS4wMTQyNDQzLDI1LjEzMzQyNzQgQzE4LjQ4ODk4NjgsMjUuMTMzNDI3NCAxOC4wNjI3MjYxLDI0LjcxNzU2MTQgMTguMDYyNzI2MSwyNC4yMDQ5MDY1IEwxOC4wNjI3MjYxLDkuNjkxODYxODUgQzE4LjA2MjcyNjEsOS4xNzkxNzYxMyAxOC40ODkwMTg0LDguNzYzMzQwOTYgMTkuMDE0MjQ0Myw4Ljc2MzM0MDk2IEMxOS41Mzk1OTY2LDguNzYzMzQwOTYgMTkuOTY1NzYyNiw5LjE3OTIwNjkzIDE5Ljk2NTc2MjYsOS42OTE4NjE4NSBMMTkuOTY1NzYyNiwyNC4yMDQ5MDY1IFoiIGlkPSLlvaLnirYiPjwvcGF0aD4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgPC9nPgogICAgICAgIDwvZz4KICAgIDwvZz4KPC9zdmc+");
+    width: 100%;
+    height:100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+/*groupid:19----------css name:OA控件-表格控件样式--------*/
+.reverse-table .vxe-body--row .vxe-body--column:first-child {
+    background-color: #f8f8f9;
+}
+.oaeditorbtn .vxe-button--content{
+    color:#1488e0;
+    font-size: 14px;
+    font-family: PingFangSC, PingFangSC-Heavy;
+    font-weight: bold;
+    text-align: center;
+    line-height: 20px;
+}
+.vxe-button.type--button{
+    background: #1488e0;
+    border-radius: 4px;
+    color:white;
+}
+.oa-vivhcenter{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.oa-hivclass{
+    display: flex;
+    width:100%;
+}
+.oa-powwidth{
+    flex:1;
+    width:100%;
+}
+:root{
+    /*表格最大宽度*/
+    --max-vextablewidth:94vw;
+    /*表格宽度*/
+    --vextablewidth:1400px;
+
+}
+/*表格具体样式*/
+.oa-vextable{
+    max-width: var(--max-vextablewidth);
+    
+    width: var(--vextablewidth);
+}
+/*表格分页*/
+.oa-vextablepage{
+    max-width: var(--max-vextablewidth);
+    width: var(--vextablewidth);
+}
+/*更多按钮的样式*/
+.oatablemorebtn{
+    width:81px;
+    margin:0.5px !important;
+    background:white !important;
+    border:1px solid #f1f1f1 !important;
+    color:#1488e0 !important;
+    font-size:14px !important ;
+}
+.oatablemorebtn:hover{
+    background:#d8d8d8 !important;
+}
+/*更多按钮的往外边框*/
+.oamorebtndiv{
+    border:1px solid #f1f1f1 ;
+}
+.oa-vexhivtable{
+    width:100%;
+}
+/*groupid:19----------css name:OA移动端样式调整--------*/
+  /*移动端样式*/
+@media screen and (max-width:768px){
+.oa-formstyle{
+	background: #ffffff;
+	border-radius: 12px;
+	box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.15); 
+	color:black;
+}
+.oa-input{
+	background: #ffffff;
+	border-radius: 12px;
+	box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.15); 
+}
+.oa-inputselect{
+	background: #ffffff;
+	border-radius: 12px;
+	box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.15); 
+}
+.oa-input[type="number"]{
+background: #ffffff;
+border: 0px solid #cccccc;
+border-radius: 2px;
+box-shadow: none; 
+}
+}
+/*groupid:19----------css name:OA组件-图片上传框B样式--------*/
+
+
+.el-upload__input {
+    display: none !important;
+}
+.show-uploadname{
+    position: absolute;
+    top:100%;
+    left:50%;
+    transform: translate(-50%);
+}
+/*groupid:25----------css name:微信加载CSS--------*/
+.wxload{
+	width: 100%;
+	height: 100vh;
+	position: fixed;
+	top: 0;
+	z-index: 10000;
+	//display: none;
+	background-color: rgba(0, 0, 0, 0.1);
+}
+.wxloader{
+	width: 140px;
+	height: 140px;
+	/* border: 1px solid red; */
+	text-align: center;
+	position: absolute;
+	top: calc(50% - 70px);
+	left: calc(50% - 70px);
+	padding-top: 15px;
+	background-color: rgba(0, 0, 0, 0.5);
+	border-radius: 5px;
+}
+#wxloader-1{
+	width: 60px;
+	height: 60px;
+}
+.wxload-msg{
+	height: 50px;
+	line-height: 50px;
+	color: #fff;
+	font-size: 13px;
+	/* margin-top: 20px; */
+}
+#wxloads svg path, svg rect {
+	fill: #17a085;
+}
