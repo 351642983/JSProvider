@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<script type="text/javascript" src="mtools/import_tools.js"></script>
+	<script type="text/javascript" src="static/import_static.js"></script>
+	<script type="text/javascript" src="mbootTool/mbootTools.js"></script>
+	<script type="text/javascript" src="mtableTool/mbtableTools.js"></script>
+	
+	<title>类别管理</title>
+</head>
+<body>
+	<div id="header">
+		<viv>
+		<block length="50px"></block>
+			<hiv>
+				<pow></pow>
+				<wiv style="width:83vw" >
+					<hiv>
+						组名搜索:
+						<block length="10px"></block>
+						<input id="alias" type="text">
+						<button onclick="search('name like ?','%'+$('#alias').val()+'%')">搜索</button>
+					</hiv>
+					
+					<button class='btn btn-primary' onclick="window.open('./jsedit.html','_self')">打开js管理页面</button>
+				</wiv>
+				<pow></pow>
+			</hiv>
+		</viv>
+	</div>
+	
+	<div class="row mtop-30">
+		<div class="col col-md-1"></div>
+		<div class="col col-md-10">
+			<div id="holder"></div>
+			<table id="table"></table>
+		</div>
+		<div class="col col-md-1"></div>
+	</div>
+	
+	<script>
+	
+		var table=initTable("table");
+		var colsweb="InfoLoaderServlet?method=loaddbcols";
+		var infoweb="InfoLoaderServlet?method=loaddbdata";
+		var insertweb="InfoLoaderServlet?method=insertdbinfo";
+		var editweb="InfoLoaderServlet?method=editdbinfo";
+		var delweb="InfoLoaderServlet?method=deldbinfo";
+		var tbname="js_groupdef";
+		
+		//插入功能
+		ignore_cols="" //插入忽略显示列
+		setDivInfo("holder",getButton("insertbtn","插入数据",1,null,"onclick='showinsert()'"));
+		insertmodal=setModal("插入数据");
+		$.post(colsweb,{table:tbname,ignore:ignore_cols},function(data){
+			var ignore_hidden=[];
+			var ignore_disabled=[]
+			var ignore_readonly=[]
+			var hiddens=["id","datetime"];
+			var disableds=["id"]
+			var readonlys=[]
+			
+			var colsname={}
+			for(var one in data){
+				
+				var hidden=null;
+				if(data[one]['hidden']==true&&ignore_hidden.indexOf(data[one]['field'])==-1||hiddens.indexOf(data[one]['field'])!=-1)
+					hidden="display:none";
+				var disabled="";
+				if(data[one]['disabled']==true&&ignore_disabled.indexOf(data[one]['field'])==-1||disableds.indexOf(data[one]['field'])!=-1)
+					disabled='disabled';
+				var readonly="";
+				if(data[one]['readonly']==true&&ignore_readonly.indexOf(data[one]['field'])==-1||readonlys.indexOf(data[one]['field'])!=-1)
+					readonly='readonly';
+				colsname[data[one]['field']]=data[one]['title']
+				var value="";
+				if(data[one]['value']!=null)
+					value=data[one]['value'];
+				//自定义类格式插入区域
+				if(data[one]['textarea']==true)
+				{
+					addModalInput(insertmodal,getInputM(data[one]['title'],"<textarea name='"+data[one]['field']+"' style='height:400px;resize:none;' class='form-control' "+readonly+" "+disabled+"> </textarea>",hidden));
+				}
+				//-------------
+				else if(data[one]['select']==null)
+					addModalInput(insertmodal,getInput(data[one]['field'],data[one]['title'],"",value,hidden,readonly,disabled));
+				else{
+					var selectnames=[];
+					var selectvalues=[];
+					for(var it in data[one]['select']){
+						selectnames.push(data[one]['select'][it]);
+						selectvalues.push(it);
+					}
+					addModalInput(insertmodal,getInputM(data[one]['title'],getSelect(data[one]['field'],selectnames,selectvalues,"form-control","",readonly+" "+disabled),hidden));
+				}
+			}
+			addModalInput(insertmodal,getInput("colsname","列名信息","",replaceAll(JSON.stringify(colsname),"\"","&quot;"),"display:none"));
+			
+		},"json");
+		function showinsert(){
+			$("#"+getModalFormId(insertmodal))[0].reset();
+			showModal(insertmodal)
+			//textarea支持tab缩进
+  			//supportTab()
+		}
+		setModalCallback(insertmodal,function(){
+			var infos=getFormJson(getModalFormId(insertmodal));
+			infos['table']=tbname;
+			infos['evalmethod']="";
+			showload();
+			$.post(insertweb,infos,function(data){
+				if(data=='true'){
+						alert("信息插入成功");
+						window.location.reload();
+					}
+					else if(data=='false'){
+						alert("插入失败");
+					}
+					else{
+						alert(data);
+					}
+					hideload();	
+			}).fail(function(){
+				alert("插入过程发生错误");
+				hideload();
+			});
+		});
+			
+		
+		//编辑功能
+		var editbtn="getButton(\"editbtn_\"+i,\"编辑\",1,null,\"onclick='edit(\"+JSON.stringify(This)+\")'\")";
+		editmodal=setModal("编辑");
+		$.post(colsweb,{table:tbname},function(data){
+			var ignore_hidden=[];
+			var ignore_disabled=[]
+			var ignore_readonly=[]
+			var hiddens=[];
+			var disableds=[]
+			var readonlys=[]
+			var colsname={}
+			
+			for(var one in data){
+				var hidden=null;
+				if(data[one]['hidden']==true&&ignore_hidden.indexOf(data[one]['field'])==-1||hiddens.indexOf(data[one]['field'])!=-1)
+					hidden="display:none";
+				var disabled="";
+				if(data[one]['disabled']==true&&ignore_disabled.indexOf(data[one]['field'])==-1||disableds.indexOf(data[one]['field'])!=-1)
+					disabled='disabled';
+				var readonly="";
+				if(data[one]['readonly']==true&&ignore_readonly.indexOf(data[one]['field'])==-1||readonlys.indexOf(data[one]['field'])!=-1)
+					readonly='readonly';
+				colsname[data[one]['field']]=data[one]['title'];
+				console.log(one+":"+data[one]['textview'])
+				var value="";
+				if(data[one]['value']!=null)
+					value=data[one]['value'];
+				//自定义类格式编辑区域
+				if(data[one]['textarea']==true)
+				{
+					addModalInput(editmodal,getInputM(data[one]['title'],"<textarea name='"+data[one]['field']+"' style='height:400px;resize:none;' class='form-control' "+readonly+" "+disabled+">"+value+"</textarea>",hidden));
+				}
+				//-------------
+				else if(data[one]['select']==null)
+					addModalInput(editmodal,getInput(data[one]['field'],data[one]['title'],"",value,hidden,readonly,disabled));
+				
+				else{
+					var selectnames=[];
+					var selectvalues=[];
+					for(var it in data[one]['select']){
+						selectnames.push(data[one]['select'][it]);
+						selectvalues.push(it);
+					}
+					addModalInput(editmodal,getInputM(data[one]['title'],getSelect(data[one]['field'],selectnames,selectvalues,"form-control","",readonly+" "+disabled),hidden));
+				}
+			}
+			addModalInput(editmodal,getInput("colsname","列名信息","",replaceAll(JSON.stringify(colsname),"\"","&quot;"),"display:none"));
+		},"json");
+		function edit(i){
+			$("#"+getModalFormId(editmodal))[0].reset();
+			var row=i;
+			row['table']=tbname;
+			for(var one in row){
+				$("*[name="+one+"]").val(row[one]);
+				console.log(one+":"+row[one])
+			}
+			showModal(editmodal);
+			//textarea支持tab缩进
+  			supportTab()
+		}
+		setModalCallback(editmodal,function(){
+			var infos=getFormJson(getModalFormId(editmodal));
+			infos['table']=tbname;
+			infos['evalmethod']="";
+			showload();
+			$.post(editweb,infos,function(data){
+				if(data=='true'){
+						alert("信息修改成功");
+						window.location.reload();
+					}
+					else if(data=='false'){
+						alert("编辑失败");
+					}
+					else{
+						alert(data);
+					}
+					hideload();	
+			}).fail(function(){
+				alert("修改过程发生错误");
+				hideload();
+			});
+		});
+		
+		
+		
+		
+		//删除功能
+		var delbtn="getButton(\"delbtn_\"+i,\"删除\",5,null,\"onclick='del(\"+JSON.stringify(This)+\")'\")";
+		function del(i)
+		{
+			var row=i;
+			row['table']=tbname;
+			if(confirm("是否删除"))
+			{
+				row['evalmethod']="";
+				showload();
+				$.post(delweb,row,function(data){
+					if(data=='true'){
+						alert("删除成功");
+						window.location.reload();
+					}
+					else if(data=="false"){
+						alert("删除失败");
+					}
+					else{
+						alert(data);
+					}
+					hideload();	
+				}).fail(function(){
+					alert("删除过程发生错误");
+					hideload();
+				});
+				
+			}
+		}
+		
+		
+		showload();
+		//后置加载
+		var postloaded=function(){
+			loadTableData(table,infoweb,tbname,function(){hideload();},"",
+			"This['handle']="
+			+editbtn	//编辑
+			+"+'&nbsp;&nbsp;&nbsp;&nbsp;'+"+
+			delbtn //删除
+			,"" //筛选条件
+			);
+		} 
+		
+		loadTableCols(table,colsweb,tbname,postloaded,"",[{field:"handle",title:"操作",align:"center",width:"200"}]);
+		function supportTab(){
+			$("textarea").on(
+	           'keydown',
+	         	function(e) {
+	             if (e.keyCode == 9) {
+	                 e.preventDefault();
+	                 var indent = '\t';
+	                 var start = this.selectionStart;
+	                 var end = this.selectionEnd;
+	                 var selected = window.getSelection().toString();
+	                 selected = indent + selected.replace(/\n/g, '\n' + indent);
+	                 this.value = this.value.substring(0, start) + selected
+	                         + this.value.substring(end);
+	                 this.setSelectionRange(start + indent.length, start
+	                         + selected.length);
+	             }
+	         })
+         }
+         
+         //重加载搜索
+         function search(afterwhere,...others)
+         {
+         	//table.bootstrapTable("destroy");
+         	
+			loadTableData(table,infoweb,tbname,function(){hideload(); },"",
+			"This['handle']="
+			+editbtn	//编辑
+			+"+'&nbsp;&nbsp;&nbsp;&nbsp;'+"+
+			delbtn //删除
+			,afterwhere //条件
+			,others	//条件值
+			)
+         }
+         loadLayout("header");
+       
+
+
+	</script>
+</body>
+</html>
