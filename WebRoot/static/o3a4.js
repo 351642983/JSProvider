@@ -2478,11 +2478,12 @@ $(function(){
 				   class="mhidden oa-vextable"
 				   :scroll-y="{enabled: false}"
 				   :export-config="{}"
+				   @filter-change="filterChangeEvent"
 				   style='overflow: visible;'
 				   >
 					
-					<vxe-column field='id'  :width="width['id']||80" :title="title.find((item)=> item.field=='id').title||'序号'" :formatter="formatter['id']!=null?({cellValue})=>{return formatterInfo(cellValue,'id')}:''" fixed="left" v-if="!editmode&&ignore.indexOf('id')==-1"  :sortable="sortable['id']!=null?sortable['id']:true" :filters="filter['id']!=null?filter['id'].info:''" :filter-method="({value,row,column})=>{return judgeInfo('id',value,row)}" ></vxe-column>
-					<vxe-column  v-for="(item,index) in title" v-if="!editmode&&item.field!='_handle'&&item.field!='id'&&ignore.indexOf(item.field)==-1" :field="item.field" :formatter="formatter[item.field]!=null?({cellValue})=>{return formatterInfo(cellValue,item.field)}:''" :title="title.find((pitem)=> pitem.field==item.field)!=null?title.find((pitem)=> pitem.field==item.field).title:item.field" :width="width[item.field]||200" :sortable='sortable[item.field]!=null?sortable[item.field]:true'></vxe-column>
+					<vxe-column field='id'  :width="width['id']||80" :title="title.find((item)=> item.field=='id').title||'序号'" :formatter="formatter['id']!=null?({cellValue})=>{return formatterInfo(cellValue,'id')}:''" fixed="left" v-if="!editmode&&ignore.indexOf('id')==-1"  :sortable="sortable['id']!=null?sortable['id']:true" :filters="filter['id']!=null?filter['id'].info:[]" :filter-method="({value,row,column})=>{return judgeInfo('id',value,row)}" ></vxe-column>
+					<vxe-column  v-for="(item,index) in title" v-if="!editmode&&item.field!='_handle'&&item.field!='id'&&ignore.indexOf(item.field)==-1" :field="item.field" :filters="filter[item.field]!=null?filter[item.field].info:[]" :filter-method="({value,row,column})=>{return judgeInfo(item.field,value,row)}" :formatter="formatter[item.field]!=null?({cellValue})=>{return formatterInfo(cellValue,item.field)}:''" :title="title.find((pitem)=> pitem.field==item.field)!=null?title.find((pitem)=> pitem.field==item.field).title:item.field" :width="width[item.field]||200" :sortable='sortable[item.field]!=null?sortable[item.field]:true'></vxe-column>
 					<vxe-column field='_handle'  fixed="right" :width="width['_handle']||200"  v-if="!editmode&&ignore.indexOf('_handle')==-1&&jsonLength(mapperIdHandle)>0" :formatter="formatter['_handle']!=null?({cellValue})=>{return formatterInfo(cellValue,'_handle')}:''" :title="title.find((item)=> item.field=='_handle').title||'操作'" :sortable="sortable['_handle']">
 						<template #default="{row}">
 							<vxe-button type="text" v-for="(item,index) in mapperHandle[mapperIdHandle[row.id]]" v-if="index<2" class='oaeditorbtn' @click='runforHandleClick(row,index)'>{{item}}</vxe-button>
@@ -2493,9 +2494,9 @@ $(function(){
 					
 					
 					<!-- 编辑模式操作结束 -->
-					<vxe-column type='seq'  :width="width['id']||80" :title="title.find((item)=> item.field=='id').title||'序号'" :formatter="formatter['id']!=null?({cellValue})=>{return formatterInfo(cellValue,'id')}:''" fixed="left" v-if="editmode&&ignore.indexOf('id')==-1"  :sortable="sortable['id']!=null?sortable['id']:true" :filters="filter['id']!=null?filter['id'].info:''" :filter-method="({value,row,column})=>{return judgeInfo('id',value,row)}" ></vxe-column>
+					<vxe-column type='seq'  :width="width['id']||80" :title="title.find((item)=> item.field=='id').title||'序号'" :formatter="formatter['id']!=null?({cellValue})=>{return formatterInfo(cellValue,'id')}:''" fixed="left" v-if="editmode&&ignore.indexOf('id')==-1"  :sortable="sortable['id']!=null?sortable['id']:true" :filters="filter['id']!=null?filter['id'].info:[]" :filter-method="({value,row,column})=>{return judgeInfo('id',value,row)}" ></vxe-column>
 					
-					<vxe-column v-if='editmode' v-for="(nitem,nindex) in nowcol"  width='190'>
+					<vxe-column v-if='editmode' v-for="(nitem,nindex) in nowcol"  width='190' :filters="filter[nowcol[nindex]]!=null?filter[nowcol[nindex]].info:[]" :filter-method="({value,row,column})=>{return judgeInfo(nowcol[nindex],value,row)}">
 						<template #header="{row}">
 						  <vxe-select v-model='nowcol[nindex]' transfer>
 							<vxe-option v-for="(item,index) in collist" :value="item" :label="index"></vxe-option>
@@ -2788,7 +2789,16 @@ $(function(){
                 postmode(){if(this.postmode){this.findList()};this.saveOA();},
                 width(){this.$refs.xTable.refreshColumn();this.saveOA();},
                 sortable(){this.$refs.xTable.refreshColumn();this.saveOA();},
-                filter(){this.$refs.xTable.refreshColumn();this.saveOA();},
+                filter(){
+                    const xTable = this.$refs.xTable;
+                    for(var i in this.filter){
+                        const column = xTable.getColumnByField(i);
+                        xTable.setFilter(column,this.filter[i].info);
+                    }
+
+                    xTable.updateData();
+                    this.saveOA();
+                    },
                 editmode(){this.$refs.xTable.refreshColumn();this.saveOA();},
                 mapperHandle(){
                     this.updateMapperHandle();this.saveOA();
@@ -2881,6 +2891,18 @@ $(function(){
                 }
             },
             methods:{
+                filterChangeEvent ({ column }) {
+                    // console.log(`${column.property} 筛选了数据`)
+                    if(!this.search){
+                        this.$refs.xTable.clearFilter();
+                        this.$message({
+                            message: '由于数据限制,筛选功能仅在搜索之后才能使用',
+                            type: 'warning'
+                        });
+                       
+                        return;
+                    }
+                },
                 loadSearchPage(num,pageSize){
                     if(!this.search)
                         return;
@@ -3065,6 +3087,8 @@ $(function(){
                 },
                 //筛选数据
                 judgeInfo(id,value,row){
+                    if(this.search)
+                        return ture;
                     return eval(this.filter[id].compare);
                 },
                 //导出数据
@@ -3633,12 +3657,18 @@ $(function(){
     _haveoatype.push({name:"vexformattermapper",title:"格式化内容",ignore:[],only:[".oa-vexhivtable"],type:"属性",
         geteval:"JSON.stringify(getOAVue(el).$data.formatter)",
         seteval:"if(value!=null)getOAVue(el).$set(getOAVue(el).$data,'formatter',eval('('+value+')'));",
-        append:`placeholder='如：{sex:{info:[{label:"1",value:"男"},{label:"0",value:"女"}]}' style='resize:none;height:150px;'`,
+        append:`placeholder='如：{sex:{info:[{label:"1",value:"男"},{label:"0",value:"女"}]}}或者{sex:{ makeeval:"var rs=label+\\"后缀\\";",geteval:"rs"}}' style='resize:none;height:150px;'`,
         make:"textarea"})
     _haveoatype.push({name:"vextablealign",title:"表格列文本对齐方式",ignore:[],only:[".oa-vexhivtable"],type:"样式",
         geteval:"getOAVue(el).$data.allalign",
         seteval:"if(value!=null)getOAVue(el).$data.allalign=value;",
         append:`placeholder='有left center right'`})
+    _haveoatype.push({name:"vextablefilter",title:"筛选功能",ignore:[],only:[".oa-vexhivtable"],type:"属性",
+        geteval:"JSON.stringify(getOAVue(el).$data.filter)",
+        seteval:"if(value!=null)getOAVue(el).$set(getOAVue(el).$data,'filter',eval('('+value+')'));",
+        make:"textarea",
+        append:`placeholder='如：{id:{info:[{label:"大于10008",value:10008}],compare:"row.id>=value"}}' style='resize:none;height:150px;'`
+    })
 
 })
 //groupid:19--------js：猜猜这是什么-------------
