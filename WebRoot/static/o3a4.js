@@ -1755,14 +1755,286 @@ $(function(){
         removeeval:"el.parent().css('flex-shrink','1');"
     }
 })
-//groupid:19--------js：OA栏目-自适应wiv高度-------------
-$(function(){ _haveoatype.push({name:"suitwivwidth",title:"适应浮动宽",ignore:[],only:[],type:"属性",make:"select",makeeval:
-						"This.append('<option value=\"{0}\">{1}</option>'.format('0','否'));" +
-						"This.append('<option value=\"{0}\">{1}</option>'.format('1','是'));"
-					,geteval:"(el.attr(name)==null?'0':el.attr(name))",seteval:"if(el.attr(name)=='0'&&el.attr(name)!=value&&_oaconfigable){alert('修改后请保存重新刷新页面生效');}el.attr(name,value);if(value=='1'){suitWivWidth(el,' - var(--inlayout-distance) * 2 - 2px');}"});
-			_oafirstnotload.push("suitwivwidth");
+//groupid:12--------js：仅布局layout-------------
+$(function(){
+ //注册全局组件
+	 Vue.component('hiv', {
+	 	template:"<div :style='{display: display,\"flex-direction\": direction}' class='_hiv'><slot></slot></div>",
+	 	props:{
+	 			// mode:{
+	 			//       type: String,
+	 			//       default: 'space-between'
+	 			// },
+	 	},
+	 	data:function(){
+	 		return {
+	 		display:'flex',
+	 		direction:'row',
+	 		}
+	 	}
+	 });
+	 Vue.component('viv', {
+	 	template:"<div :style='{display: display,\"flex-direction\": direction}' class='_viv'><slot></slot></div>",
+	 	props:{
+	 			// mode:{
+	 			//       type: String,
+	 			//       default: 'space-between'
+	 			// },
+	 	},
+	 	data:function(){
+	 		return {
+	 		display:'flex',
+	 		direction:'column',
+	 		}
+	 	}
+	 });
+	 Vue.component('rhiv',{
+	 	template:"<div :style='{display: display,\"flex-direction\": direction}' class='_rhiv'><slot></slot></div>",
+	 	props:{
+	 			// mode:{
+	 			//       type: String,
+	 			//       default: 'space-between'
+	 			// },
+	 	},
+	 	data:function(){
+	 		return {
+	 		display:'flex',
+	 		direction:'row-reverse',
+	 		}
+	 	}
+	 });
+	 Vue.component('rviv',{
+	 	template:"<div :style='{display: display,\"flex-direction\": direction}'  class='_rviv'><slot></slot></div>",
+	 	props:{
+	 			// mode:{
+	 			//       type: String,
+	 			//       default: 'space-between'
+	 			// },
+	 	},
+	 	data:function(){
+	 		return {
+	 		display:'flex',
+	 		direction:'column-reverse',
+	 		}
+	 	}
+	 });
+	 //不支持block和pow，含有属性
+	 Vue.component('wiv',{
+	 	template:"<div :style='{display: display,\"flex-direction\":direction,\"flex-wrap\":wrap,\"justify-content\":mode,\"align-content\":vmode}' class='_wiv'><slot></slot></div>",
+		props:{
+				mode:{
+				      type: String,
+				      default: 'space-between'
+				},
+				vmode:{
+					type: String,
+					default: 'space-between'
+				},
+				direction:{
+					type: String,
+					default: 'row'
+				}
+		},
+		data:function(){
+			return {
+			display:'flex',
+			wrap:'wrap'
+			
+			}
+		}
+		
+	 });
+	 Vue.component('rwiv',{
+	 	template:"<div :style='{display: display,\"flex-direction\":direction,\"flex-wrap\":wrap,\"justify-content\":mode,\"align-content\":vmode}' class='_wiv'><slot></slot></div>",
+	 	props:{
+	 			mode:{
+	 			      type: String,
+	 			      default: 'space-between'
+	 			},
+				vmode:{
+					type: String,
+					default: 'space-between'
+				},
+				direction:{
+					type: String,
+					default: 'row'
+				}
+	 	},
+	 	data:function(){
+	 		return {
+	 		display:'flex',
+	 		wrap:'wrap-reverse',
+	 		}
+	 	}
+	 });
+	 
+	 
+	 Vue.component('pow', {
+	 	template:"<div ref='pow' class='_pow' :style=\"{width:this.width,height:this.height,'flex':this.flex}\"><slot></slot></div>",
+		props:{
+				length:{
+				      type: String,
+				      default: '100%'
+				},
+				flex:{
+					type: String,
+					default: '1.0'
+				}
+		},
+		data:function(){
+			return {
+			height:'100%',
+			width:'100%',
+			run:false}
+		},
+		 created:function(){
+			// if(this.$data.run=='10%')
+			// {
+			// 	this.$data.run=1;
+			// 	alert('test');
+			// }
+			 if(parseInt(Vue.version[0])==1) {
+				 if (!this.$data.run) {
+					 this.$data.run = true;
+					 if (this.$parent.$el.className.indexOf('_viv') != -1) {
+						 this.$data.width = '0%';
+						 this.$data.height = this.length;
 
+					 } else if (this.$parent.$el.className.indexOf('_hiv') != -1) {
+
+						 this.$data.height = '0%';
+						 this.$data.width = this.length;
+					 }
+				 }
+			 }
+
+
+
+		},
+		 mounted:function(){
+			 // if(this.$data.run=='10%')
+			 // {
+			 // 	this.$data.run=1;
+			 // 	alert('test');
+			 // }
+			 if(parseInt(Vue.version[0])>1) {
+				 if (!this.$data.run) {
+					 this.$data.run = true;
+					 if (this.$parent.$el.className.indexOf('_viv') != -1) {
+						 this.$data.width = '0%';
+						 this.$data.height = this.length;
+
+					 } else if (this.$parent.$el.className.indexOf('_hiv') != -1) {
+
+						 this.$data.height = '0%';
+						 this.$data.width = this.length;
+					 }
+				 }
+			 }
+
+
+
+		 }
+
+
+	 })
+	 Vue.component('block', {
+	 	template:"<div ref='block' class='_block' :style='{width:width,height:height,\"flex-shrink\":this[\"flex-shrink\"]}'><slot></slot></div>",
+		props:{
+				length:{
+				      type: String,
+				      default: '100%'
+				},
+
+		},
+		data:function(){
+			return {
+			height:'100%',
+			width:'100%',
+			'flex-shrink':0,
+			run:false}
+		},created:function(){
+			// if(this.$data.run=='10%')
+			// {
+			// 	this.$data.run=1;
+			// 	alert('test');
+			// }
+			if(parseInt(Vue.version[0])==1)
+			{
+				if(!this.$data.run)
+				{
+					this.$data.run=true;
+					if(this.$parent.$el.className.indexOf('_viv')!=-1||this.$parent.$el.className.indexOf('_rviv')!=-1)
+					{
+						this.$data.width='0%';
+						this.$data.height=this.length;
+
+					}
+					else if(this.$parent.$el.className.indexOf('_hiv')!=-1||this.$parent.$el.className.indexOf('_rhiv')!=-1||this.$parent.$el.className.indexOf('_wiv')!=-1||this.$parent.$el.className.indexOf('_rwiv')!=-1)
+					{
+
+						this.$data.height='0%';
+						this.$data.width=this.length;
+
+					}
+
+				}
+			}
+
+			 // console.log(this.$data.$el.className)
+		}
+		,mounted:function(){
+			 // if(this.$data.run=='10%')
+			 // {
+			 // 	this.$data.run=1;
+			 // 	alert('test');
+			 // }
+			 if(parseInt(Vue.version[0])>1)
+			 {
+				 if(!this.$data.run)
+				 {
+					 this.$data.run=true;
+					 if(this.$parent.$el.className.indexOf('_viv')!=-1||this.$parent.$el.className.indexOf('_rviv')!=-1)
+					 {
+						 this.$data.width='0%';
+						 this.$data.height=this.length;
+
+					 }
+					 else if(this.$parent.$el.className.indexOf('_hiv')!=-1||this.$parent.$el.className.indexOf('_rhiv')!=-1||this.$parent.$el.className.indexOf('_rwiv')!=-1||this.$parent.$el.className.indexOf('_wiv')!=-1)
+					 {
+
+						 this.$data.height='0%';
+						 this.$data.width=this.length;
+
+					 }
+
+				 }
+			 }
+
+			 // console.log(this.$data.$el.className)
+		 }
+	 })
 });
+function loadLayout(id){
+	$(function(){
+		if(id==null)
+		{
+			var bodyEle = document.body;
+			// $(bodyEle).wrap("<div id='_thlayout_MXFTWCG' style='display:flex;'></div>");
+			bodyEle.innerHTML="<div id='_thlayout_MXFTWCG'>"+bodyEle.innerHTML+"</div>";
+			new Vue({el:"#_thlayout_MXFTWCG"});
+		}
+		else{
+			new Vue({el:"#"+id});
+		}
+	})
+}
+function loadLayoutClass(c){
+	$(function(){
+		new Vue({el:"."+c});
+	})
+}
+
 //groupid:19--------js：OA组件-单项选择框-------------
 //OA组件-选择框-------------------------------
 $(function() {
@@ -2899,7 +3171,7 @@ $(function(){
                             message: '由于数据限制,筛选功能仅在搜索之后才能使用',
                             type: 'warning'
                         });
-                       
+
                         return;
                     }
                 },
@@ -3305,12 +3577,20 @@ $(function(){
                     eval(`function runPrejs(){`+that.mapperHandleEvent[that.mapperIdHandle[row.id]][that.mapperHandle[that.mapperIdHandle[row.id]][index]].prejs+`}`);
                     var preresult=runPrejs();
                     if(preresult!=false){
+                        var userCode=null;
+                        if(sessionStorage.getItem("userInfo")!=null){
+                            var userInfo=JSON.parse(sessionStorage.getItem("userInfo"));
+                            if(userInfo["userCode"]!=null){
+                                userCode= userInfo["userCode"];
+                            }
+                        }
                         $.post(oa_serverip+"TokerServlet?method=oahandle", {
                             pageid:getUrlParam("id"),
                             eleid:getOAEleIndex($(that.$options.el).children(),_eleinfos),
                             handleid:that.mapperIdHandle[row.id],
                             btnname:that.mapperHandle[that.mapperIdHandle[row.id]][index],
-                            row:row
+                            row:row,
+                            handleUserCode:userCode
                         },function(data){
                             if(data.code==200){
                                 data=data.data;
@@ -3938,35 +4218,13 @@ $(function(){
     //注册为表单组件（可更换类型的组件）
     registerOAFormComponent("信息导航标题",".oa-tiptitle");
 })
-//groupid:19--------js：OA栏目-背景-------------
-//OA栏目-背景-------------------------------------------
-$(function(){
-    //图片组件
-    _haveoatype.push({
-        name: "bgsrc",
-        title: "背景内容",
-        only: [],
-        ignore: [],
-        type: "样式",
-        seteval: "if(value!=null&&value!='')el.css('background-image','url(\"{0}\")'.format(value))",
-        geteval: "el.css('background-image')",
-        makeeval: "This.after('<button class=\"btn btn-default\" onclick=\\'setOAInfo($(\"#{0}\"),\"背景内容\",\" \");$(\"input[name=bgsrc]\").val(\"\");\\'>清空</button>'.format(el.attr('id')))",
-        append: " style='width:120px'"
-    });
-    _haveoatype.push({name:"bgpsrc",title:"背景上传",only:[],ignore:[],type:"样式",seteval:"function _bgdownel(el){" +
-            "sendFile($('input[name=bgpsrc]')[0].files[0],function(res){" +
-            " setOAInfo(el,'背景内容',oa_serverip + res.path);console.log(oa_serverip + res.path);" +
-            "})};if(value!=''&&value!=null)_bgdownel(el);",geteval:"''",makeeval:
-            "This.attr('type','file')",update:['bgsrc']});
-    _oafirstnotload.push("bgpsrc");
-    _haveoatype.push({name:"bgwidth",title:"背景宽高",only:[],ignore:[],type:"样式",seteval:"el.css('background-size','{0}'.format(value))",geteval:"el.css('background-size')",append:"placeholder='如(宽和高大小):100% auto'"});
-    _haveoatype.push({name:"bgrepeat",title:"背景平铺",ignore:[],only:[],type:"样式",make:"select",makeeval:
-            "This.append('<option value=\"{0}\">{1}</option>'.format('no-repeat','平铺'));" +
-            "This.append('<option value=\"{0}\">{1}</option>'.format('repeat','重复'));" +
-            "This.append('<option value=\"{0}\">{1}</option>'.format('repeat-x','重复x'));" +
-            "This.append('<option value=\"{0}\">{1}</option>'.format('repeat-y','重复y'));"
-        ,geteval:"el.css('background-repeat')",seteval:"el.css('background-repeat',value);"});
-    _haveoatype.push({name:"bgposition",title:"背景位置",only:[],ignore:[],type:"样式",seteval:"el.css('background-position','{0}'.format(value))",geteval:"el.css('background-position')",append:"placeholder='如(x和y):10px center'"});
+//groupid:19--------js：OA栏目-自适应wiv高度-------------
+$(function(){ _haveoatype.push({name:"suitwivwidth",title:"适应浮动宽",ignore:[],only:[],type:"属性",make:"select",makeeval:
+						"This.append('<option value=\"{0}\">{1}</option>'.format('0','否'));" +
+						"This.append('<option value=\"{0}\">{1}</option>'.format('1','是'));"
+					,geteval:"(el.attr(name)==null?'0':el.attr(name))",seteval:"if(el.attr(name)=='0'&&el.attr(name)!=value&&_oaconfigable){alert('修改后请保存重新刷新页面生效');}el.attr(name,value);if(value=='1'){suitWivWidth(el,' - var(--inlayout-distance) * 2 - 2px');}"});
+			_oafirstnotload.push("suitwivwidth");
+
 });
 //groupid:19--------js：OA栏目-自拓增列表-------------
 //------------全属性：自拓增列表-----------
@@ -6750,286 +7008,36 @@ function makeOAModal(pid){
     })
     return modal;
 }
-//groupid:12--------js：仅布局layout-------------
+//groupid:19--------js：OA栏目-背景-------------
+//OA栏目-背景-------------------------------------------
 $(function(){
- //注册全局组件
-	 Vue.component('hiv', {
-	 	template:"<div :style='{display: display,\"flex-direction\": direction}' class='_hiv'><slot></slot></div>",
-	 	props:{
-	 			// mode:{
-	 			//       type: String,
-	 			//       default: 'space-between'
-	 			// },
-	 	},
-	 	data:function(){
-	 		return {
-	 		display:'flex',
-	 		direction:'row',
-	 		}
-	 	}
-	 });
-	 Vue.component('viv', {
-	 	template:"<div :style='{display: display,\"flex-direction\": direction}' class='_viv'><slot></slot></div>",
-	 	props:{
-	 			// mode:{
-	 			//       type: String,
-	 			//       default: 'space-between'
-	 			// },
-	 	},
-	 	data:function(){
-	 		return {
-	 		display:'flex',
-	 		direction:'column',
-	 		}
-	 	}
-	 });
-	 Vue.component('rhiv',{
-	 	template:"<div :style='{display: display,\"flex-direction\": direction}' class='_rhiv'><slot></slot></div>",
-	 	props:{
-	 			// mode:{
-	 			//       type: String,
-	 			//       default: 'space-between'
-	 			// },
-	 	},
-	 	data:function(){
-	 		return {
-	 		display:'flex',
-	 		direction:'row-reverse',
-	 		}
-	 	}
-	 });
-	 Vue.component('rviv',{
-	 	template:"<div :style='{display: display,\"flex-direction\": direction}'  class='_rviv'><slot></slot></div>",
-	 	props:{
-	 			// mode:{
-	 			//       type: String,
-	 			//       default: 'space-between'
-	 			// },
-	 	},
-	 	data:function(){
-	 		return {
-	 		display:'flex',
-	 		direction:'column-reverse',
-	 		}
-	 	}
-	 });
-	 //不支持block和pow，含有属性
-	 Vue.component('wiv',{
-	 	template:"<div :style='{display: display,\"flex-direction\":direction,\"flex-wrap\":wrap,\"justify-content\":mode,\"align-content\":vmode}' class='_wiv'><slot></slot></div>",
-		props:{
-				mode:{
-				      type: String,
-				      default: 'space-between'
-				},
-				vmode:{
-					type: String,
-					default: 'space-between'
-				},
-				direction:{
-					type: String,
-					default: 'row'
-				}
-		},
-		data:function(){
-			return {
-			display:'flex',
-			wrap:'wrap'
-			
-			}
-		}
-		
-	 });
-	 Vue.component('rwiv',{
-	 	template:"<div :style='{display: display,\"flex-direction\":direction,\"flex-wrap\":wrap,\"justify-content\":mode,\"align-content\":vmode}' class='_wiv'><slot></slot></div>",
-	 	props:{
-	 			mode:{
-	 			      type: String,
-	 			      default: 'space-between'
-	 			},
-				vmode:{
-					type: String,
-					default: 'space-between'
-				},
-				direction:{
-					type: String,
-					default: 'row'
-				}
-	 	},
-	 	data:function(){
-	 		return {
-	 		display:'flex',
-	 		wrap:'wrap-reverse',
-	 		}
-	 	}
-	 });
-	 
-	 
-	 Vue.component('pow', {
-	 	template:"<div ref='pow' class='_pow' :style=\"{width:this.width,height:this.height,'flex':this.flex}\"><slot></slot></div>",
-		props:{
-				length:{
-				      type: String,
-				      default: '100%'
-				},
-				flex:{
-					type: String,
-					default: '1.0'
-				}
-		},
-		data:function(){
-			return {
-			height:'100%',
-			width:'100%',
-			run:false}
-		},
-		 created:function(){
-			// if(this.$data.run=='10%')
-			// {
-			// 	this.$data.run=1;
-			// 	alert('test');
-			// }
-			 if(parseInt(Vue.version[0])==1) {
-				 if (!this.$data.run) {
-					 this.$data.run = true;
-					 if (this.$parent.$el.className.indexOf('_viv') != -1) {
-						 this.$data.width = '0%';
-						 this.$data.height = this.length;
-
-					 } else if (this.$parent.$el.className.indexOf('_hiv') != -1) {
-
-						 this.$data.height = '0%';
-						 this.$data.width = this.length;
-					 }
-				 }
-			 }
-
-
-
-		},
-		 mounted:function(){
-			 // if(this.$data.run=='10%')
-			 // {
-			 // 	this.$data.run=1;
-			 // 	alert('test');
-			 // }
-			 if(parseInt(Vue.version[0])>1) {
-				 if (!this.$data.run) {
-					 this.$data.run = true;
-					 if (this.$parent.$el.className.indexOf('_viv') != -1) {
-						 this.$data.width = '0%';
-						 this.$data.height = this.length;
-
-					 } else if (this.$parent.$el.className.indexOf('_hiv') != -1) {
-
-						 this.$data.height = '0%';
-						 this.$data.width = this.length;
-					 }
-				 }
-			 }
-
-
-
-		 }
-
-
-	 })
-	 Vue.component('block', {
-	 	template:"<div ref='block' class='_block' :style='{width:width,height:height,\"flex-shrink\":this[\"flex-shrink\"]}'><slot></slot></div>",
-		props:{
-				length:{
-				      type: String,
-				      default: '100%'
-				},
-
-		},
-		data:function(){
-			return {
-			height:'100%',
-			width:'100%',
-			'flex-shrink':0,
-			run:false}
-		},created:function(){
-			// if(this.$data.run=='10%')
-			// {
-			// 	this.$data.run=1;
-			// 	alert('test');
-			// }
-			if(parseInt(Vue.version[0])==1)
-			{
-				if(!this.$data.run)
-				{
-					this.$data.run=true;
-					if(this.$parent.$el.className.indexOf('_viv')!=-1||this.$parent.$el.className.indexOf('_rviv')!=-1)
-					{
-						this.$data.width='0%';
-						this.$data.height=this.length;
-
-					}
-					else if(this.$parent.$el.className.indexOf('_hiv')!=-1||this.$parent.$el.className.indexOf('_rhiv')!=-1||this.$parent.$el.className.indexOf('_wiv')!=-1||this.$parent.$el.className.indexOf('_rwiv')!=-1)
-					{
-
-						this.$data.height='0%';
-						this.$data.width=this.length;
-
-					}
-
-				}
-			}
-
-			 // console.log(this.$data.$el.className)
-		}
-		,mounted:function(){
-			 // if(this.$data.run=='10%')
-			 // {
-			 // 	this.$data.run=1;
-			 // 	alert('test');
-			 // }
-			 if(parseInt(Vue.version[0])>1)
-			 {
-				 if(!this.$data.run)
-				 {
-					 this.$data.run=true;
-					 if(this.$parent.$el.className.indexOf('_viv')!=-1||this.$parent.$el.className.indexOf('_rviv')!=-1)
-					 {
-						 this.$data.width='0%';
-						 this.$data.height=this.length;
-
-					 }
-					 else if(this.$parent.$el.className.indexOf('_hiv')!=-1||this.$parent.$el.className.indexOf('_rhiv')!=-1||this.$parent.$el.className.indexOf('_rwiv')!=-1||this.$parent.$el.className.indexOf('_wiv')!=-1)
-					 {
-
-						 this.$data.height='0%';
-						 this.$data.width=this.length;
-
-					 }
-
-				 }
-			 }
-
-			 // console.log(this.$data.$el.className)
-		 }
-	 })
+    //图片组件
+    _haveoatype.push({
+        name: "bgsrc",
+        title: "背景内容",
+        only: [],
+        ignore: [],
+        type: "样式",
+        seteval: "if(value!=null&&value!='')el.css('background-image','url(\"{0}\")'.format(value))",
+        geteval: "el.css('background-image')",
+        makeeval: "This.after('<button class=\"btn btn-default\" onclick=\\'setOAInfo($(\"#{0}\"),\"背景内容\",\" \");$(\"input[name=bgsrc]\").val(\"\");\\'>清空</button>'.format(el.attr('id')))",
+        append: " style='width:120px'"
+    });
+    _haveoatype.push({name:"bgpsrc",title:"背景上传",only:[],ignore:[],type:"样式",seteval:"function _bgdownel(el){" +
+            "sendFile($('input[name=bgpsrc]')[0].files[0],function(res){" +
+            " setOAInfo(el,'背景内容',oa_serverip + res.path);console.log(oa_serverip + res.path);" +
+            "})};if(value!=''&&value!=null)_bgdownel(el);",geteval:"''",makeeval:
+            "This.attr('type','file')",update:['bgsrc']});
+    _oafirstnotload.push("bgpsrc");
+    _haveoatype.push({name:"bgwidth",title:"背景宽高",only:[],ignore:[],type:"样式",seteval:"el.css('background-size','{0}'.format(value))",geteval:"el.css('background-size')",append:"placeholder='如(宽和高大小):100% auto'"});
+    _haveoatype.push({name:"bgrepeat",title:"背景平铺",ignore:[],only:[],type:"样式",make:"select",makeeval:
+            "This.append('<option value=\"{0}\">{1}</option>'.format('no-repeat','平铺'));" +
+            "This.append('<option value=\"{0}\">{1}</option>'.format('repeat','重复'));" +
+            "This.append('<option value=\"{0}\">{1}</option>'.format('repeat-x','重复x'));" +
+            "This.append('<option value=\"{0}\">{1}</option>'.format('repeat-y','重复y'));"
+        ,geteval:"el.css('background-repeat')",seteval:"el.css('background-repeat',value);"});
+    _haveoatype.push({name:"bgposition",title:"背景位置",only:[],ignore:[],type:"样式",seteval:"el.css('background-position','{0}'.format(value))",geteval:"el.css('background-position')",append:"placeholder='如(x和y):10px center'"});
 });
-function loadLayout(id){
-	$(function(){
-		if(id==null)
-		{
-			var bodyEle = document.body;
-			// $(bodyEle).wrap("<div id='_thlayout_MXFTWCG' style='display:flex;'></div>");
-			bodyEle.innerHTML="<div id='_thlayout_MXFTWCG'>"+bodyEle.innerHTML+"</div>";
-			new Vue({el:"#_thlayout_MXFTWCG"});
-		}
-		else{
-			new Vue({el:"#"+id});
-		}
-	})
-}
-function loadLayoutClass(c){
-	$(function(){
-		new Vue({el:"."+c});
-	})
-}
-
 //groupid:19--------js：OA组件-按钮-------------
 //---------------
 $(function(){
@@ -7566,6 +7574,16 @@ function _changeFormData(formData, jqform) {
 				value: getUrlParam(_itemid),
 				type: "integer"
 			})
+		if(sessionStorage.getItem("userInfo")!=null){
+			var userInfo=JSON.parse(sessionStorage.getItem("userInfo"));
+			if(userInfo["userCode"]!=null){
+				formData.push({
+					name: "userCode",
+					value: userInfo["userCode"],
+					type: "text"
+				})
+			}
+		}
 		formData.push({
 			name: "devid",
 			value: _devid,
@@ -8010,6 +8028,22 @@ $(function(){
     //设置内容加载栏目
     _mapperSetter['下拉多选框']={};
     _mapperSetter['下拉多选框'].default="设置下拉多选框值";
+});
+//groupid:19--------js：OA全局属性-设置系统编号-------------
+//-----追加全局块设置系统设备编号---------
+$(function(){
+    _haveoatype.push({
+        name: "setsysdevid",
+        title: "设置系统编号",
+        ignore: [],
+        only: ["._oa-global"],
+        type: "属性",
+        geteval: `getOAInfo(el,'设置系统编号')||_devid`
+        ,seteval: `
+            if(value!=null&&value!=''){
+                _devid=parseInt(value);
+            }`
+    });
 });
 //groupid:19--------js：OA一次加载-------------
 //将OA的元素都设置为第一次加载
