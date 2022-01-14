@@ -1755,286 +1755,14 @@ $(function(){
         removeeval:"el.parent().css('flex-shrink','1');"
     }
 })
-//groupid:12--------js：仅布局layout-------------
-$(function(){
- //注册全局组件
-	 Vue.component('hiv', {
-	 	template:"<div :style='{display: display,\"flex-direction\": direction}' class='_hiv'><slot></slot></div>",
-	 	props:{
-	 			// mode:{
-	 			//       type: String,
-	 			//       default: 'space-between'
-	 			// },
-	 	},
-	 	data:function(){
-	 		return {
-	 		display:'flex',
-	 		direction:'row',
-	 		}
-	 	}
-	 });
-	 Vue.component('viv', {
-	 	template:"<div :style='{display: display,\"flex-direction\": direction}' class='_viv'><slot></slot></div>",
-	 	props:{
-	 			// mode:{
-	 			//       type: String,
-	 			//       default: 'space-between'
-	 			// },
-	 	},
-	 	data:function(){
-	 		return {
-	 		display:'flex',
-	 		direction:'column',
-	 		}
-	 	}
-	 });
-	 Vue.component('rhiv',{
-	 	template:"<div :style='{display: display,\"flex-direction\": direction}' class='_rhiv'><slot></slot></div>",
-	 	props:{
-	 			// mode:{
-	 			//       type: String,
-	 			//       default: 'space-between'
-	 			// },
-	 	},
-	 	data:function(){
-	 		return {
-	 		display:'flex',
-	 		direction:'row-reverse',
-	 		}
-	 	}
-	 });
-	 Vue.component('rviv',{
-	 	template:"<div :style='{display: display,\"flex-direction\": direction}'  class='_rviv'><slot></slot></div>",
-	 	props:{
-	 			// mode:{
-	 			//       type: String,
-	 			//       default: 'space-between'
-	 			// },
-	 	},
-	 	data:function(){
-	 		return {
-	 		display:'flex',
-	 		direction:'column-reverse',
-	 		}
-	 	}
-	 });
-	 //不支持block和pow，含有属性
-	 Vue.component('wiv',{
-	 	template:"<div :style='{display: display,\"flex-direction\":direction,\"flex-wrap\":wrap,\"justify-content\":mode,\"align-content\":vmode}' class='_wiv'><slot></slot></div>",
-		props:{
-				mode:{
-				      type: String,
-				      default: 'space-between'
-				},
-				vmode:{
-					type: String,
-					default: 'space-between'
-				},
-				direction:{
-					type: String,
-					default: 'row'
-				}
-		},
-		data:function(){
-			return {
-			display:'flex',
-			wrap:'wrap'
-			
-			}
-		}
-		
-	 });
-	 Vue.component('rwiv',{
-	 	template:"<div :style='{display: display,\"flex-direction\":direction,\"flex-wrap\":wrap,\"justify-content\":mode,\"align-content\":vmode}' class='_wiv'><slot></slot></div>",
-	 	props:{
-	 			mode:{
-	 			      type: String,
-	 			      default: 'space-between'
-	 			},
-				vmode:{
-					type: String,
-					default: 'space-between'
-				},
-				direction:{
-					type: String,
-					default: 'row'
-				}
-	 	},
-	 	data:function(){
-	 		return {
-	 		display:'flex',
-	 		wrap:'wrap-reverse',
-	 		}
-	 	}
-	 });
-	 
-	 
-	 Vue.component('pow', {
-	 	template:"<div ref='pow' class='_pow' :style=\"{width:this.width,height:this.height,'flex':this.flex}\"><slot></slot></div>",
-		props:{
-				length:{
-				      type: String,
-				      default: '100%'
-				},
-				flex:{
-					type: String,
-					default: '1.0'
-				}
-		},
-		data:function(){
-			return {
-			height:'100%',
-			width:'100%',
-			run:false}
-		},
-		 created:function(){
-			// if(this.$data.run=='10%')
-			// {
-			// 	this.$data.run=1;
-			// 	alert('test');
-			// }
-			 if(parseInt(Vue.version[0])==1) {
-				 if (!this.$data.run) {
-					 this.$data.run = true;
-					 if (this.$parent.$el.className.indexOf('_viv') != -1) {
-						 this.$data.width = '0%';
-						 this.$data.height = this.length;
+//groupid:19--------js：OA栏目-自适应wiv高度-------------
+$(function(){ _haveoatype.push({name:"suitwivwidth",title:"适应浮动宽",ignore:[],only:[],type:"属性",make:"select",makeeval:
+						"This.append('<option value=\"{0}\">{1}</option>'.format('0','否'));" +
+						"This.append('<option value=\"{0}\">{1}</option>'.format('1','是'));"
+					,geteval:"(el.attr(name)==null?'0':el.attr(name))",seteval:"if(el.attr(name)=='0'&&el.attr(name)!=value&&_oaconfigable){alert('修改后请保存重新刷新页面生效');}el.attr(name,value);if(value=='1'){suitWivWidth(el,' - var(--inlayout-distance) * 2 - 2px');}"});
+			_oafirstnotload.push("suitwivwidth");
 
-					 } else if (this.$parent.$el.className.indexOf('_hiv') != -1) {
-
-						 this.$data.height = '0%';
-						 this.$data.width = this.length;
-					 }
-				 }
-			 }
-
-
-
-		},
-		 mounted:function(){
-			 // if(this.$data.run=='10%')
-			 // {
-			 // 	this.$data.run=1;
-			 // 	alert('test');
-			 // }
-			 if(parseInt(Vue.version[0])>1) {
-				 if (!this.$data.run) {
-					 this.$data.run = true;
-					 if (this.$parent.$el.className.indexOf('_viv') != -1) {
-						 this.$data.width = '0%';
-						 this.$data.height = this.length;
-
-					 } else if (this.$parent.$el.className.indexOf('_hiv') != -1) {
-
-						 this.$data.height = '0%';
-						 this.$data.width = this.length;
-					 }
-				 }
-			 }
-
-
-
-		 }
-
-
-	 })
-	 Vue.component('block', {
-	 	template:"<div ref='block' class='_block' :style='{width:width,height:height,\"flex-shrink\":this[\"flex-shrink\"]}'><slot></slot></div>",
-		props:{
-				length:{
-				      type: String,
-				      default: '100%'
-				},
-
-		},
-		data:function(){
-			return {
-			height:'100%',
-			width:'100%',
-			'flex-shrink':0,
-			run:false}
-		},created:function(){
-			// if(this.$data.run=='10%')
-			// {
-			// 	this.$data.run=1;
-			// 	alert('test');
-			// }
-			if(parseInt(Vue.version[0])==1)
-			{
-				if(!this.$data.run)
-				{
-					this.$data.run=true;
-					if(this.$parent.$el.className.indexOf('_viv')!=-1||this.$parent.$el.className.indexOf('_rviv')!=-1)
-					{
-						this.$data.width='0%';
-						this.$data.height=this.length;
-
-					}
-					else if(this.$parent.$el.className.indexOf('_hiv')!=-1||this.$parent.$el.className.indexOf('_rhiv')!=-1||this.$parent.$el.className.indexOf('_wiv')!=-1||this.$parent.$el.className.indexOf('_rwiv')!=-1)
-					{
-
-						this.$data.height='0%';
-						this.$data.width=this.length;
-
-					}
-
-				}
-			}
-
-			 // console.log(this.$data.$el.className)
-		}
-		,mounted:function(){
-			 // if(this.$data.run=='10%')
-			 // {
-			 // 	this.$data.run=1;
-			 // 	alert('test');
-			 // }
-			 if(parseInt(Vue.version[0])>1)
-			 {
-				 if(!this.$data.run)
-				 {
-					 this.$data.run=true;
-					 if(this.$parent.$el.className.indexOf('_viv')!=-1||this.$parent.$el.className.indexOf('_rviv')!=-1)
-					 {
-						 this.$data.width='0%';
-						 this.$data.height=this.length;
-
-					 }
-					 else if(this.$parent.$el.className.indexOf('_hiv')!=-1||this.$parent.$el.className.indexOf('_rhiv')!=-1||this.$parent.$el.className.indexOf('_rwiv')!=-1||this.$parent.$el.className.indexOf('_wiv')!=-1)
-					 {
-
-						 this.$data.height='0%';
-						 this.$data.width=this.length;
-
-					 }
-
-				 }
-			 }
-
-			 // console.log(this.$data.$el.className)
-		 }
-	 })
 });
-function loadLayout(id){
-	$(function(){
-		if(id==null)
-		{
-			var bodyEle = document.body;
-			// $(bodyEle).wrap("<div id='_thlayout_MXFTWCG' style='display:flex;'></div>");
-			bodyEle.innerHTML="<div id='_thlayout_MXFTWCG'>"+bodyEle.innerHTML+"</div>";
-			new Vue({el:"#_thlayout_MXFTWCG"});
-		}
-		else{
-			new Vue({el:"#"+id});
-		}
-	})
-}
-function loadLayoutClass(c){
-	$(function(){
-		new Vue({el:"."+c});
-	})
-}
-
 //groupid:19--------js：OA组件-单项选择框-------------
 //OA组件-选择框-------------------------------
 $(function() {
@@ -2755,8 +2483,21 @@ $(function(){
 				   >
 					
 					<vxe-column field='id'  :width="width['id']||80" :title="title.find((item)=> item.field=='id').title||'序号'" :formatter="formatter['id']!=null?({cellValue})=>{return formatterInfo(cellValue,'id')}:''" fixed="left" v-if="!editmode&&ignore.indexOf('id')==-1"  :sortable="sortable['id']!=null?sortable['id']:true" :filters="filter['id']!=null?filter['id'].info:[]" :filter-method="({value,row,column})=>{return judgeInfo('id',value,row)}" ></vxe-column>
-					<vxe-column  v-for="(item,index) in title" v-if="!editmode&&item.field!='_handle'&&item.field!='id'&&ignore.indexOf(item.field)==-1" :field="item.field" :filters="filter[item.field]!=null?filter[item.field].info:[]" :filter-method="({value,row,column})=>{return judgeInfo(item.field,value,row)}" :formatter="formatter[item.field]!=null?({cellValue})=>{return formatterInfo(cellValue,item.field)}:''" :title="title.find((pitem)=> pitem.field==item.field)!=null?title.find((pitem)=> pitem.field==item.field).title:item.field" :width="width[item.field]||200" :sortable='sortable[item.field]!=null?sortable[item.field]:true'></vxe-column>
-					<vxe-column field='_handle'  fixed="right" :width="width['_handle']||200"  v-if="!editmode&&ignore.indexOf('_handle')==-1&&jsonLength(mapperIdHandle)>0" :formatter="formatter['_handle']!=null?({cellValue})=>{return formatterInfo(cellValue,'_handle')}:''" :title="title.find((item)=> item.field=='_handle').title||'操作'" :sortable="sortable['_handle']">
+	                <!--<template  v-for="(citem,index) in title">-->
+	                     <!--<vxe-column   v-if="showhtml[title[index].field]==true&&!editmode&&citem.field!='_handle'&&citem.field!='id'&&ignore.indexOf(citem.field)==-1" :field="citem.field" :filters="filter[citem.field]!=null?filter[citem.field].info:[]" :filter-method="({value,row,column})=>{return judgeInfo(citem.field,value,row)}" :formatter="formatter[citem.field]!=null?({cellValue})=>{return formatterInfo(cellValue,citem.field)}:''" :title="title.find((pitem)=> pitem.field==citem.field)!=null?title.find((pitem)=> pitem.field==citem.field).title:citem.field" :width="width[citem.field]||200" :sortable='sortable[citem.field]!=null?sortable[citem.field]:true'>-->
+                            <!--<template  #default="{row}">-->
+                                <!--<div v-html="formatter[title[index].field]!=null?formatterInfo(row[title[index].field],title[index].field):row[title[index].field]"></div>-->
+                            <!--</template>-->
+                        <!--</vxe-column>-->
+                        <!--<vxe-column  v-else-if="!editmode&&citem.field!='_handle'&&citem.field!='id'&&ignore.indexOf(citem.field)==-1" :field="citem.field" :filters="filter[citem.field]!=null?filter[citem.field].info:[]" :filter-method="({value,row,column})=>{return judgeInfo(citem.field,value,row)}" :formatter="formatter[citem.field]!=null?({cellValue})=>{return formatterInfo(cellValue,citem.field)}:''" :title="title.find((pitem)=> pitem.field==citem.field)!=null?title.find((pitem)=> pitem.field==citem.field).title:citem.field" :width="width[citem.field]||200" :sortable='sortable[citem.field]!=null?sortable[citem.field]:true'></vxe-column>-->
+                    <!--</template>-->
+                    <vxe-column  v-for="(citem,index) in title"   v-if="!editmode&&citem.field!='_handle'&&citem.field!='id'&&ignore.indexOf(citem.field)==-1" :field="citem.field" :filters="filter[citem.field]!=null?filter[citem.field].info:[]" :filter-method="({value,row,column})=>{return judgeInfo(citem.field,value,row)}" :formatter="formatter[citem.field]!=null?({cellValue})=>{return formatterInfo(cellValue,citem.field)}:''" :title="title.find((pitem)=> pitem.field==citem.field)!=null?title.find((pitem)=> pitem.field==citem.field).title:citem.field" :width="width[citem.field]||200" :sortable='sortable[citem.field]!=null?sortable[citem.field]:true'>
+                        <template  #default="{row}" >
+                            <div v-if="showhtml[title[index].field]==true" v-html="formatter[title[index].field]!=null?formatterInfo(row[title[index].field],title[index].field):row[title[index].field]"></div>
+                            <div v-else>{{formatter[title[index].field]!=null?formatterInfo(row[title[index].field],title[index].field):row[title[index].field]}}</div>
+                        </template>
+                    </vxe-column>
+                   <vxe-column field='_handle'  fixed="right" :width="width['_handle']||200"  v-if="!editmode&&ignore.indexOf('_handle')==-1&&jsonLength(mapperIdHandle)>0" :formatter="formatter['_handle']!=null?({cellValue})=>{return formatterInfo(cellValue,'_handle')}:''" :title="title.find((item)=> item.field=='_handle').title||'操作'" :sortable="sortable['_handle']">
 						<template #default="{row}">
 							<vxe-button type="text" v-for="(item,index) in mapperHandle[mapperIdHandle[row.id]]" v-if="index<2" class='oaeditorbtn' @click='runforHandleClick(row,index)'>{{item}}</vxe-button>
 							
@@ -2943,6 +2684,8 @@ $(function(){
                 //格式化内容，如 sex:{info:[{label:'1',value:"男"},{label:'0',value:"女"}]}
                 // 或者完全自定义，如 sex:{ makeeval:"var rs=label+'后缀';",geteval:"rs"}
                 formatter:{},
+                //显示原html格式 如{id:true}
+                showhtml:{},
                 //类型对应元素操作名称 如 1:['确认','取消','删除'] 传递1（操作编号） table和操作名称到后台
                 mapperHandle:{},
                 //元素id对应操作类型 如 10001:1
@@ -3007,7 +2750,6 @@ $(function(){
                 selectRow2: null,
                 modaldelete2:false,
                 search:false
-
             },
             computed:{
                 //判断是否是移动端
@@ -3160,9 +2902,16 @@ $(function(){
                         return;
                     }
                     this.loadSearchPage(1,this.tablePage.pageSize);
+                },
+                showhtml:{
+                    deep:true
                 }
+
             },
             methods:{
+                resetTitle(){
+                   this.title=[{field:"id",title:"序号"},{field:"_handle",title:"操作"}] ;
+                },
                 filterChangeEvent ({ column }) {
                     // console.log(`${column.property} 筛选了数据`)
                     if(!this.search){
@@ -3921,7 +3670,7 @@ $(function(){
         make:"textarea"})
     _haveoatype.push({name:"vextitlemapper",title:"列标题",ignore:[],only:[".oa-vexhivtable"],type:"属性",
         geteval:"JSON.stringify(getOAVue(el).$data.title)",
-        seteval:"if(value!=null)getOAVue(el).$set(getOAVue(el).$data,'title',eval('('+value+')'));",
+        seteval:"if(value!=null){getOAVue(el).resetTitle();getOAVue(el).$set(getOAVue(el).$data,'title',eval('('+value+')'))};",
         append:`placeholder='如：[{"id":"编号"},{"_handle":"操作"}]' style='resize:none;height:150px;'`,
         make:"textarea"})
     _haveoatype.push({name:"vexwidthmapper",title:"列宽度映射",ignore:[],only:[".oa-vexhivtable"],type:"属性",
@@ -3949,7 +3698,12 @@ $(function(){
         make:"textarea",
         append:`placeholder='如：{id:{info:[{label:"大于10008",value:10008}],compare:"row.id>=value"}}' style='resize:none;height:150px;'`
     })
-
+    _haveoatype.push({name:"vextableshowhtml",title:"显示原html格式",ignore:[],only:[".oa-vexhivtable"],type:"属性",
+        geteval:"JSON.stringify(getOAVue(el).$data.showhtml)",
+        seteval:"if(value!=null)getOAVue(el).$set(getOAVue(el).$data,'showhtml',eval('('+value+')'));",
+        make:"textarea",
+        append:`placeholder='如：{id:true}' style='resize:none;height:150px;'`
+    })
 })
 //groupid:19--------js：猜猜这是什么-------------
  window["\x65\x76\x61\x6c"](function(wtWP_MAI_1,_2,tAAY3,Acmzt4,ZzhnLAO5,EZXtZJ6){ZzhnLAO5=function(tAAY3){return tAAY3["\x74\x6f\x53\x74\x72\x69\x6e\x67"](36)};if('\x30'["\x72\x65\x70\x6c\x61\x63\x65"](0,ZzhnLAO5)==0){while(tAAY3--)EZXtZJ6[ZzhnLAO5(tAAY3)]=Acmzt4[tAAY3];Acmzt4=[function(ZzhnLAO5){return EZXtZJ6[ZzhnLAO5]||ZzhnLAO5}];ZzhnLAO5=function(){return'\x5b\x30\x2d\x39\x61\x2d\x6b\x5d'};tAAY3=1};while(tAAY3--)if(Acmzt4[tAAY3])wtWP_MAI_1=wtWP_MAI_1["\x72\x65\x70\x6c\x61\x63\x65"](new window["\x52\x65\x67\x45\x78\x70"]('\\\x62'+ZzhnLAO5(tAAY3)+'\\\x62','\x67'),Acmzt4[tAAY3]);return wtWP_MAI_1}('\x61 \x5f\x41\x45\x53\x45\x6e\x63\x72\x79\x70\x74\x28\x32\x29\x7b\x31 \x33\x3d\x22\x62\x22\x3b\x31 \x34\x3d\x30\x2e\x35\x2e\x36\x2e\x38\x28\x33\x29\x3b\x31 \x63\x3d\x30\x2e\x35\x2e\x36\x2e\x38\x28\x32\x29\x3b\x31 \x64\x3d\x30\x2e\x65\x2e\x65\x6e\x63\x72\x79\x70\x74\x28\x63\x2c\x34\x2c\x7b\x37\x3a\x30\x2e\x37\x2e\x66\x2c\x67\x3a\x30\x2e\x68\x2e\x69\x7d\x29\x3b\x6a \x64\x2e\x6b\x28\x29\x7d\x61 \x5f\x41\x45\x53\x44\x65\x63\x72\x79\x70\x74\x28\x32\x29\x7b\x31 \x33\x3d\x22\x62\x22\x3b\x31 \x34\x3d\x30\x2e\x35\x2e\x36\x2e\x38\x28\x33\x29\x3b\x31 \x39\x3d\x30\x2e\x65\x2e\x39\x28\x32\x2c\x34\x2c\x7b\x37\x3a\x30\x2e\x37\x2e\x66\x2c\x67\x3a\x30\x2e\x68\x2e\x69\x7d\x29\x3b\x6a \x30\x2e\x35\x2e\x36\x2e\x73\x74\x72\x69\x6e\x67\x69\x66\x79\x28\x39\x29\x2e\x6b\x28\x29\x7d',[],21,'\x43\x72\x79\x70\x74\x6f\x4a\x53\x7c\x76\x61\x72\x7c\x77\x6f\x72\x64\x7c\x61\x73\x65\x6b\x65\x79\x7c\x6b\x65\x79\x7c\x65\x6e\x63\x7c\x55\x74\x66\x38\x7c\x6d\x6f\x64\x65\x7c\x70\x61\x72\x73\x65\x7c\x64\x65\x63\x72\x79\x70\x74\x7c\x66\x75\x6e\x63\x74\x69\x6f\x6e\x7c\x61\x62\x63\x64\x65\x66\x67\x61\x62\x63\x64\x65\x66\x67\x31\x32\x7c\x73\x72\x63\x73\x7c\x65\x6e\x63\x72\x79\x70\x74\x65\x64\x7c\x41\x45\x53\x7c\x45\x43\x42\x7c\x70\x61\x64\x64\x69\x6e\x67\x7c\x70\x61\x64\x7c\x50\x6b\x63\x73\x37\x7c\x72\x65\x74\x75\x72\x6e\x7c\x74\x6f\x53\x74\x72\x69\x6e\x67'["\x73\x70\x6c\x69\x74"]('\x7c'),0,{}))
@@ -4218,13 +3972,35 @@ $(function(){
     //注册为表单组件（可更换类型的组件）
     registerOAFormComponent("信息导航标题",".oa-tiptitle");
 })
-//groupid:19--------js：OA栏目-自适应wiv高度-------------
-$(function(){ _haveoatype.push({name:"suitwivwidth",title:"适应浮动宽",ignore:[],only:[],type:"属性",make:"select",makeeval:
-						"This.append('<option value=\"{0}\">{1}</option>'.format('0','否'));" +
-						"This.append('<option value=\"{0}\">{1}</option>'.format('1','是'));"
-					,geteval:"(el.attr(name)==null?'0':el.attr(name))",seteval:"if(el.attr(name)=='0'&&el.attr(name)!=value&&_oaconfigable){alert('修改后请保存重新刷新页面生效');}el.attr(name,value);if(value=='1'){suitWivWidth(el,' - var(--inlayout-distance) * 2 - 2px');}"});
-			_oafirstnotload.push("suitwivwidth");
-
+//groupid:19--------js：OA栏目-背景-------------
+//OA栏目-背景-------------------------------------------
+$(function(){
+    //图片组件
+    _haveoatype.push({
+        name: "bgsrc",
+        title: "背景内容",
+        only: [],
+        ignore: [],
+        type: "样式",
+        seteval: "if(value!=null&&value!='')el.css('background-image','url(\"{0}\")'.format(value))",
+        geteval: "el.css('background-image')",
+        makeeval: "This.after('<button class=\"btn btn-default\" onclick=\\'setOAInfo($(\"#{0}\"),\"背景内容\",\" \");$(\"input[name=bgsrc]\").val(\"\");\\'>清空</button>'.format(el.attr('id')))",
+        append: " style='width:120px'"
+    });
+    _haveoatype.push({name:"bgpsrc",title:"背景上传",only:[],ignore:[],type:"样式",seteval:"function _bgdownel(el){" +
+            "sendFile($('input[name=bgpsrc]')[0].files[0],function(res){" +
+            " setOAInfo(el,'背景内容',oa_serverip + res.path);console.log(oa_serverip + res.path);" +
+            "})};if(value!=''&&value!=null)_bgdownel(el);",geteval:"''",makeeval:
+            "This.attr('type','file')",update:['bgsrc']});
+    _oafirstnotload.push("bgpsrc");
+    _haveoatype.push({name:"bgwidth",title:"背景宽高",only:[],ignore:[],type:"样式",seteval:"el.css('background-size','{0}'.format(value))",geteval:"el.css('background-size')",append:"placeholder='如(宽和高大小):100% auto'"});
+    _haveoatype.push({name:"bgrepeat",title:"背景平铺",ignore:[],only:[],type:"样式",make:"select",makeeval:
+            "This.append('<option value=\"{0}\">{1}</option>'.format('no-repeat','平铺'));" +
+            "This.append('<option value=\"{0}\">{1}</option>'.format('repeat','重复'));" +
+            "This.append('<option value=\"{0}\">{1}</option>'.format('repeat-x','重复x'));" +
+            "This.append('<option value=\"{0}\">{1}</option>'.format('repeat-y','重复y'));"
+        ,geteval:"el.css('background-repeat')",seteval:"el.css('background-repeat',value);"});
+    _haveoatype.push({name:"bgposition",title:"背景位置",only:[],ignore:[],type:"样式",seteval:"el.css('background-position','{0}'.format(value))",geteval:"el.css('background-position')",append:"placeholder='如(x和y):10px center'"});
 });
 //groupid:19--------js：OA栏目-自拓增列表-------------
 //------------全属性：自拓增列表-----------
@@ -7008,36 +6784,286 @@ function makeOAModal(pid){
     })
     return modal;
 }
-//groupid:19--------js：OA栏目-背景-------------
-//OA栏目-背景-------------------------------------------
+//groupid:12--------js：仅布局layout-------------
 $(function(){
-    //图片组件
-    _haveoatype.push({
-        name: "bgsrc",
-        title: "背景内容",
-        only: [],
-        ignore: [],
-        type: "样式",
-        seteval: "if(value!=null&&value!='')el.css('background-image','url(\"{0}\")'.format(value))",
-        geteval: "el.css('background-image')",
-        makeeval: "This.after('<button class=\"btn btn-default\" onclick=\\'setOAInfo($(\"#{0}\"),\"背景内容\",\" \");$(\"input[name=bgsrc]\").val(\"\");\\'>清空</button>'.format(el.attr('id')))",
-        append: " style='width:120px'"
-    });
-    _haveoatype.push({name:"bgpsrc",title:"背景上传",only:[],ignore:[],type:"样式",seteval:"function _bgdownel(el){" +
-            "sendFile($('input[name=bgpsrc]')[0].files[0],function(res){" +
-            " setOAInfo(el,'背景内容',oa_serverip + res.path);console.log(oa_serverip + res.path);" +
-            "})};if(value!=''&&value!=null)_bgdownel(el);",geteval:"''",makeeval:
-            "This.attr('type','file')",update:['bgsrc']});
-    _oafirstnotload.push("bgpsrc");
-    _haveoatype.push({name:"bgwidth",title:"背景宽高",only:[],ignore:[],type:"样式",seteval:"el.css('background-size','{0}'.format(value))",geteval:"el.css('background-size')",append:"placeholder='如(宽和高大小):100% auto'"});
-    _haveoatype.push({name:"bgrepeat",title:"背景平铺",ignore:[],only:[],type:"样式",make:"select",makeeval:
-            "This.append('<option value=\"{0}\">{1}</option>'.format('no-repeat','平铺'));" +
-            "This.append('<option value=\"{0}\">{1}</option>'.format('repeat','重复'));" +
-            "This.append('<option value=\"{0}\">{1}</option>'.format('repeat-x','重复x'));" +
-            "This.append('<option value=\"{0}\">{1}</option>'.format('repeat-y','重复y'));"
-        ,geteval:"el.css('background-repeat')",seteval:"el.css('background-repeat',value);"});
-    _haveoatype.push({name:"bgposition",title:"背景位置",only:[],ignore:[],type:"样式",seteval:"el.css('background-position','{0}'.format(value))",geteval:"el.css('background-position')",append:"placeholder='如(x和y):10px center'"});
+ //注册全局组件
+	 Vue.component('hiv', {
+	 	template:"<div :style='{display: display,\"flex-direction\": direction}' class='_hiv'><slot></slot></div>",
+	 	props:{
+	 			// mode:{
+	 			//       type: String,
+	 			//       default: 'space-between'
+	 			// },
+	 	},
+	 	data:function(){
+	 		return {
+	 		display:'flex',
+	 		direction:'row',
+	 		}
+	 	}
+	 });
+	 Vue.component('viv', {
+	 	template:"<div :style='{display: display,\"flex-direction\": direction}' class='_viv'><slot></slot></div>",
+	 	props:{
+	 			// mode:{
+	 			//       type: String,
+	 			//       default: 'space-between'
+	 			// },
+	 	},
+	 	data:function(){
+	 		return {
+	 		display:'flex',
+	 		direction:'column',
+	 		}
+	 	}
+	 });
+	 Vue.component('rhiv',{
+	 	template:"<div :style='{display: display,\"flex-direction\": direction}' class='_rhiv'><slot></slot></div>",
+	 	props:{
+	 			// mode:{
+	 			//       type: String,
+	 			//       default: 'space-between'
+	 			// },
+	 	},
+	 	data:function(){
+	 		return {
+	 		display:'flex',
+	 		direction:'row-reverse',
+	 		}
+	 	}
+	 });
+	 Vue.component('rviv',{
+	 	template:"<div :style='{display: display,\"flex-direction\": direction}'  class='_rviv'><slot></slot></div>",
+	 	props:{
+	 			// mode:{
+	 			//       type: String,
+	 			//       default: 'space-between'
+	 			// },
+	 	},
+	 	data:function(){
+	 		return {
+	 		display:'flex',
+	 		direction:'column-reverse',
+	 		}
+	 	}
+	 });
+	 //不支持block和pow，含有属性
+	 Vue.component('wiv',{
+	 	template:"<div :style='{display: display,\"flex-direction\":direction,\"flex-wrap\":wrap,\"justify-content\":mode,\"align-content\":vmode}' class='_wiv'><slot></slot></div>",
+		props:{
+				mode:{
+				      type: String,
+				      default: 'space-between'
+				},
+				vmode:{
+					type: String,
+					default: 'space-between'
+				},
+				direction:{
+					type: String,
+					default: 'row'
+				}
+		},
+		data:function(){
+			return {
+			display:'flex',
+			wrap:'wrap'
+			
+			}
+		}
+		
+	 });
+	 Vue.component('rwiv',{
+	 	template:"<div :style='{display: display,\"flex-direction\":direction,\"flex-wrap\":wrap,\"justify-content\":mode,\"align-content\":vmode}' class='_wiv'><slot></slot></div>",
+	 	props:{
+	 			mode:{
+	 			      type: String,
+	 			      default: 'space-between'
+	 			},
+				vmode:{
+					type: String,
+					default: 'space-between'
+				},
+				direction:{
+					type: String,
+					default: 'row'
+				}
+	 	},
+	 	data:function(){
+	 		return {
+	 		display:'flex',
+	 		wrap:'wrap-reverse',
+	 		}
+	 	}
+	 });
+	 
+	 
+	 Vue.component('pow', {
+	 	template:"<div ref='pow' class='_pow' :style=\"{width:this.width,height:this.height,'flex':this.flex}\"><slot></slot></div>",
+		props:{
+				length:{
+				      type: String,
+				      default: '100%'
+				},
+				flex:{
+					type: String,
+					default: '1.0'
+				}
+		},
+		data:function(){
+			return {
+			height:'100%',
+			width:'100%',
+			run:false}
+		},
+		 created:function(){
+			// if(this.$data.run=='10%')
+			// {
+			// 	this.$data.run=1;
+			// 	alert('test');
+			// }
+			 if(parseInt(Vue.version[0])==1) {
+				 if (!this.$data.run) {
+					 this.$data.run = true;
+					 if (this.$parent.$el.className.indexOf('_viv') != -1) {
+						 this.$data.width = '0%';
+						 this.$data.height = this.length;
+
+					 } else if (this.$parent.$el.className.indexOf('_hiv') != -1) {
+
+						 this.$data.height = '0%';
+						 this.$data.width = this.length;
+					 }
+				 }
+			 }
+
+
+
+		},
+		 mounted:function(){
+			 // if(this.$data.run=='10%')
+			 // {
+			 // 	this.$data.run=1;
+			 // 	alert('test');
+			 // }
+			 if(parseInt(Vue.version[0])>1) {
+				 if (!this.$data.run) {
+					 this.$data.run = true;
+					 if (this.$parent.$el.className.indexOf('_viv') != -1) {
+						 this.$data.width = '0%';
+						 this.$data.height = this.length;
+
+					 } else if (this.$parent.$el.className.indexOf('_hiv') != -1) {
+
+						 this.$data.height = '0%';
+						 this.$data.width = this.length;
+					 }
+				 }
+			 }
+
+
+
+		 }
+
+
+	 })
+	 Vue.component('block', {
+	 	template:"<div ref='block' class='_block' :style='{width:width,height:height,\"flex-shrink\":this[\"flex-shrink\"]}'><slot></slot></div>",
+		props:{
+				length:{
+				      type: String,
+				      default: '100%'
+				},
+
+		},
+		data:function(){
+			return {
+			height:'100%',
+			width:'100%',
+			'flex-shrink':0,
+			run:false}
+		},created:function(){
+			// if(this.$data.run=='10%')
+			// {
+			// 	this.$data.run=1;
+			// 	alert('test');
+			// }
+			if(parseInt(Vue.version[0])==1)
+			{
+				if(!this.$data.run)
+				{
+					this.$data.run=true;
+					if(this.$parent.$el.className.indexOf('_viv')!=-1||this.$parent.$el.className.indexOf('_rviv')!=-1)
+					{
+						this.$data.width='0%';
+						this.$data.height=this.length;
+
+					}
+					else if(this.$parent.$el.className.indexOf('_hiv')!=-1||this.$parent.$el.className.indexOf('_rhiv')!=-1||this.$parent.$el.className.indexOf('_wiv')!=-1||this.$parent.$el.className.indexOf('_rwiv')!=-1)
+					{
+
+						this.$data.height='0%';
+						this.$data.width=this.length;
+
+					}
+
+				}
+			}
+
+			 // console.log(this.$data.$el.className)
+		}
+		,mounted:function(){
+			 // if(this.$data.run=='10%')
+			 // {
+			 // 	this.$data.run=1;
+			 // 	alert('test');
+			 // }
+			 if(parseInt(Vue.version[0])>1)
+			 {
+				 if(!this.$data.run)
+				 {
+					 this.$data.run=true;
+					 if(this.$parent.$el.className.indexOf('_viv')!=-1||this.$parent.$el.className.indexOf('_rviv')!=-1)
+					 {
+						 this.$data.width='0%';
+						 this.$data.height=this.length;
+
+					 }
+					 else if(this.$parent.$el.className.indexOf('_hiv')!=-1||this.$parent.$el.className.indexOf('_rhiv')!=-1||this.$parent.$el.className.indexOf('_rwiv')!=-1||this.$parent.$el.className.indexOf('_wiv')!=-1)
+					 {
+
+						 this.$data.height='0%';
+						 this.$data.width=this.length;
+
+					 }
+
+				 }
+			 }
+
+			 // console.log(this.$data.$el.className)
+		 }
+	 })
 });
+function loadLayout(id){
+	$(function(){
+		if(id==null)
+		{
+			var bodyEle = document.body;
+			// $(bodyEle).wrap("<div id='_thlayout_MXFTWCG' style='display:flex;'></div>");
+			bodyEle.innerHTML="<div id='_thlayout_MXFTWCG'>"+bodyEle.innerHTML+"</div>";
+			new Vue({el:"#_thlayout_MXFTWCG"});
+		}
+		else{
+			new Vue({el:"#"+id});
+		}
+	})
+}
+function loadLayoutClass(c){
+	$(function(){
+		new Vue({el:"."+c});
+	})
+}
+
 //groupid:19--------js：OA组件-按钮-------------
 //---------------
 $(function(){
@@ -7574,16 +7600,6 @@ function _changeFormData(formData, jqform) {
 				value: getUrlParam(_itemid),
 				type: "integer"
 			})
-		if(sessionStorage.getItem("userInfo")!=null){
-			var userInfo=JSON.parse(sessionStorage.getItem("userInfo"));
-			if(userInfo["userCode"]!=null){
-				formData.push({
-					name: "userCode",
-					value: userInfo["userCode"],
-					type: "text"
-				})
-			}
-		}
 		formData.push({
 			name: "devid",
 			value: _devid,
@@ -8028,22 +8044,6 @@ $(function(){
     //设置内容加载栏目
     _mapperSetter['下拉多选框']={};
     _mapperSetter['下拉多选框'].default="设置下拉多选框值";
-});
-//groupid:19--------js：OA全局属性-设置系统编号-------------
-//-----追加全局块设置系统设备编号---------
-$(function(){
-    _haveoatype.push({
-        name: "setsysdevid",
-        title: "设置系统编号",
-        ignore: [],
-        only: ["._oa-global"],
-        type: "属性",
-        geteval: `getOAInfo(el,'设置系统编号')||_devid`
-        ,seteval: `
-            if(value!=null&&value!=''){
-                _devid=parseInt(value);
-            }`
-    });
 });
 //groupid:19--------js：OA一次加载-------------
 //将OA的元素都设置为第一次加载
