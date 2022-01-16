@@ -787,4 +787,4 @@ _elevue={},_popid_eleid={},_oaconfigable=!0,_oabasetitle=["组件编号","组件
                     }
                 },10)
             }
-        `}),registerOAJs("下拉多选框",".oa-treeselect"),registerOAOnlyEffect("setmultiplevalue","下拉多选框"),_mapperSetter["下拉多选框"]={},_mapperSetter["下拉多选框"].default="设置下拉多选框值"}),$(function(){for(var e in _haveoatype)_oafirstnotload.push(_haveoatype.name)});
+        `}),registerOAJs("下拉多选框",".oa-treeselect"),registerOAOnlyEffect("setmultiplevalue","下拉多选框"),_mapperSetter["下拉多选框"]={},_mapperSetter["下拉多选框"].default="设置下拉多选框值"}),$(function(){for(var e in _haveoatype)_oafirstnotload.push(_haveoatype[e].name)});
