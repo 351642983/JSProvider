@@ -303,7 +303,7 @@ _elevue={},_popid_eleid={},_oaconfigable=!0,_oabasetitle=["组件编号","组件
                                 var father=findOAListFather(el);
                                 if(father!=null)
                                    id=findOAValuePosition(el,father)-1;
-                                cel.hide();
+                                cel.parent().hide();
                                 var data=eval(value);
                                 var copylayout=getLayoutReplayInfo(cel,_elemidinfos)
                                 var ci=1;
