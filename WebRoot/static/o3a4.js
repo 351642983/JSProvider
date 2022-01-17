@@ -329,8 +329,10 @@ _elevue={},_popid_eleid={},_oaconfigable=!0,_oabasetitle=["组件编号","组件
                     },pvalue,10);
                     
                 }
-                var pvalue=value.replace(/\\[.*?\\]/g,'');
-                pdelayset(el,pvalue,value);
+                if(!value.startsWith('(')){
+                    var pvalue=value.replace(/\\[.*?\\]/g,'');
+                    pdelayset(el,pvalue,value);
+                }
              }
         `,make:"textarea",makeeval:`
             if(findOAListFather(el)!=null){
@@ -351,6 +353,9 @@ _elevue={},_popid_eleid={},_oaconfigable=!0,_oabasetitle=["组件编号","组件
                                 id=findOAValuePosition(father,grandfather)-1;
                             var data=eval(realvaluename);
                             id=findOAValuePosition(el,father)-1;
+                            if(realvaluename.startsWith("(")){
+                                id+=1;
+                            }
                             if(id>=0){
                                 if(!value.trim().startsWith("{"))
                                     setOAInfo(el,"文本内容",eval(value));
