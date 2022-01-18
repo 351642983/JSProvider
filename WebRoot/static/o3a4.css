@@ -63,6 +63,8 @@ display:none !important;
 --inform-leftpad:17.55px;
 /*表单输入框右侧内距离*/
 --inform-rightpad:17.55px;
+/*tabs样式B下划线样式灰色下划线高*/
+--tabsb-bottomline:0px;
 }
 /*单元格样式*/
 .vxe-body--column.vxcolcell{
@@ -75,6 +77,7 @@ display:none !important;
 /*表格标题下的横线*/
 .vxe-table .vxe-table--header-wrapper .vxe-table--header-border-line {
     border-bottom: 1px solid #A8A9AC !important;
+	width:100% !important;
 }
 /*滚动条整体部分*/
 .oa-vextable ::-webkit-scrollbar {
