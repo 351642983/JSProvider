@@ -514,6 +514,33 @@ _elevue={},_popid_eleid={},_oaconfigable=!0,_oabasetitle=["组件编号","组件
            
         `,removeeval:`
             el.unbind('click.test1')
+         `},_oabaseclass["点击使上一个上下隐藏"]={class:_bsclassname+"tbuhide",addeval:`
+            el.bind('click.test2',function(){
+                if($(this).oaprev().hasClass("_clickTBShow")){
+                    $(this).oaprev().removeClass("_clickTBShow");
+                    $(this).oaprev().slideTop(100,null,true);
+                }
+                else{
+                    $(this).oaprev().addClass("_clickTBShow");
+                    $(this).oaprev().slideTop(100,null,false);
+                }
+            })
+        `,removeeval:`
+            el.unbind('click.test2')
+         `},_oabaseclass["点击使上一个左右隐藏"]={class:_bsclassname+"uclose",addeval:`
+              el.bind('click.test3',function(){
+                if($(this).oaprev().hasClass("_clickLRShow")){
+                    $(this).oaprev().removeClass("_clickLRShow");
+                    $(this).oaprev().slideLeft(300,null,true);
+                }
+                else{
+                    $(this).oaprev().addClass("_clickLRShow");
+                    $(this).oaprev().slideLeft(300,null,false);
+                }
+            })
+           
+        `,removeeval:`
+            el.unbind('click.test3')
          `},_oabaseclass["默认上下隐藏"]={class:_bsclassname+"dftbhide",addeval:`
             const wpel=el;
             setTimeout(function(){
