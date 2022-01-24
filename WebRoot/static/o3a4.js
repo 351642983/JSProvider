@@ -33,7 +33,7 @@ _elevue={},_popid_eleid={},_oaconfigable=!0,_oabasetitle=["组件编号","组件
                     
                 }
                 if(!value.startsWith('(')){
-                    var pvalue=value.replace(/\\[.*?\\]/g,'');
+                    var pvalue=value.replace(/\\[.*?\\].*/g,'');
                     pdelayset(el,pvalue,value);
                 }
              }
@@ -46,7 +46,7 @@ _elevue={},_popid_eleid={},_oaconfigable=!0,_oabasetitle=["组件编号","组件
                 var father=findOAListFather(el);
                 if(father!=null){
                     var realvaluename=getOAInfo(father,'列表变量值');
-                    var pvaluename=realvaluename.replace(/\\[.*?\\]/g,'');
+                    var pvaluename=realvaluename.replace(/\\[.*?\\].*/g,'');
                
                     function ptdelayset(el,value,pvaluename,realvaluename,father){
                         loadCheckValid(function(){
