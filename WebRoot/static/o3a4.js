@@ -705,12 +705,20 @@ _elevue={},_popid_eleid={},_oaconfigable=!0,_oabasetitle=["组件编号","组件
         `,removeeval:`
             el.parent().css('position','relative');
             el.parent().removeCss('inset');
+     `},_oabaseclass["开启拖拽百分比定位"]={class:"_oareladraggablepercent",addeval:`
+        `,removeeval:`
      `},_oabaseclass["开启拖拽布局"]={class:"_oareladraggable",addeval:`
             if(_oaconfigable){
                 const dpel=el;
                 setTimeout(function(){
                     dpel.draggable({
                         stop(event,ui){
+                        if($(this).hasClass('_oareladraggablepercent')){
+                             var l = ( 100 * parseFloat($(this).position().left / parseFloat($(this).parent().width())) ) + "%" ;
+                             var t = ( 100 * parseFloat($(this).position().top / document.documentElement.clientHeight) ) + "vh" ;
+                             $(this).css("left", l);
+                             $(this).css("top", t);
+                         }
                          setOAInfo(dpel,'整体样式',dpel.attr('style'));
                         }
                     });
